@@ -1,0 +1,29 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+' As a campus manager, I want to edit the building
+actor "Campus Manager" as CM
+participant "<<System C4>>\nRobDroneGo" as RDG
+
+activate CM
+
+CM -> RDG: 1. requests to edit a passagem  
+activate RDG
+
+RDG -> CM: 1.1 asks to choose the passagem  
+
+CM -> RDG: 2. chooses the passagem  
+
+RDG -> CM: 2.1 shows the passagem  information and asks to select what to edit
+
+CM -> RDG: 3. chooses what to edit
+
+RDG -> CM: 3.1 asks for the new information
+
+CM -> RDG: 4. types the new information
+
+RDG -> RDG: updates the passagem  information
+
+RDG -> CM: 4.1 informs the passagem  was updated
+
+
+@enduml

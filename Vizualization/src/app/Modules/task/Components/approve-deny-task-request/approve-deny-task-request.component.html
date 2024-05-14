@@ -1,0 +1,23 @@
+<div class="task-container">
+    <h2>Approve/Deny Task Requests</h2>
+
+    <form>
+
+        <div class="form-group">
+            <label for="taskId">Select Request:</label>
+            <select id="taskId" [(ngModel)]="taskId" name="taskId" required>
+                <option *ngFor="let task of tasks" [value]="task.taskId">{{ task.taskType }}: {{ task.location1 }}-{{ task.location2 }}</option>
+              </select>
+        </div>
+        <ul class="cool_buttons">
+        <li><button class="approveButton" type="button" (click)="approveTask()">Approve</button></li>
+        <li><button class="denyButton" type="button" (click)="denyTask()">Deny</button></li>
+        </ul>
+
+
+        <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+        <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+
+    </form>
+</div>

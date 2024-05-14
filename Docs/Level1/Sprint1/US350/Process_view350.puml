@@ -1,0 +1,15 @@
+@startuml
+
+actor "Fleet Manager" as FM
+participant "<<System C4>>\nRobDroneGo" as RDG
+
+activate FM
+
+FM -> RDG: Sends data to create type of robot
+activate RDG
+
+RDG -> RDG: Validates data and creates type of robot
+
+RDG --> FM: Sends success/failure message
+
+@enduml

@@ -1,0 +1,51 @@
+@startuml
+participant "<<Container C4>>\nCampus Management" as RDG
+participant "Routing" as ROUT
+participant "Controller" as CTR
+participant "Service" as Serv
+participant "BuildingRepository" as BREPO
+participant "FloorRepository" as FREPO
+participant "Mapper" as Mapper
+participant "Database" as DB
+--> RDG : Get request: "/api/building/getBuildingsByMaxAndMinFloors"
+activate RDG
+RDG -> ROUT : Route to "/api/building/getBuildingsByMaxAndMinFloors"
+activate ROUT
+ROUT -> CTR : Call "getBuildingsByMaxAndMinFloors" method
+activate CTR
+CTR -> Serv : Call "getBuildingsByMaxAndMinFloors" method
+activate Serv
+Serv -> BREPO : Find all Building record using findAll method
+activate BREPO
+BREPO -> DB : Contact the database
+activate DB
+DB --> BREPO : Return the Building records (if found)
+deactivate DB
+BREPO -> Mapper : Map the Building records to Building to BuildingDTO(s)
+activate Mapper
+Mapper -> BREPO : Return the mapped Building records
+deactivate Mapper
+BREPO --> Serv : Return the BuildingDTO(s)
+deactivate BREPO
+Serv -> FREPO : Iterates through the BuildingDTO(s) and \nfinds the Floor records using the buildingId \nof the BuildingDTO as a parameter for the \nmethod findByBuildingId for each BuildingDTO
+activate FREPO
+FREPO -> DB : Contact the database
+activate DB
+DB --> FREPO : Return the Floor records (if found)
+deactivate DB
+FREPO -> Mapper : Map the Floor record to FloorDTO(s)
+activate Mapper
+Mapper -> FREPO : Return the mapped Floor records
+deactivate Mapper
+FREPO --> Serv : Return the FloorDTO(s)
+deactivate FREPO
+Serv --> Serv : Checks if the number of Floors is between \nthe max and min defined in the request body \n for each BluindingDTO. If it is, the BuildingDTO \nis added to a list of BuildingDTO(s)
+Serv --> CTR : Return the list of BuildingDTO(s)
+deactivate Serv
+CTR --> ROUT : Return the list of BuildingDTO(s)
+deactivate CTR
+ROUT --> RDG : Return the list of BuildingDTO(s)
+deactivate ROUT
+
+
+@enduml

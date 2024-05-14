@@ -1,0 +1,11 @@
+@startuml
+
+left to right direction
+
+(List all Floors of a Building) as (x)
+
+:Campus Manager: as CM
+
+CM -- (x)
+
+@enduml

@@ -1,0 +1,38 @@
+@startuml To list buildings
+actor "Campus Manager" as user
+participant "FrontEnd" as FE
+participant "ListBuildingsHTML" as HTML
+participant "ListBuildingsComponent" as COMP
+participant "FloorService" as SERV
+participant "BuildingRoute" as ROUTE
+participant "BackEnd" as BE
+
+activate user
+user -> FE: wants to see all buildings
+activate FE
+FE -> HTML: 
+activate HTML
+HTML -> COMP: ngOnInit()
+activate COMP
+COMP -> SERV: listBuildings()
+activate SERV
+SERV -> ROUTE: GET /building/getAll
+activate ROUTE
+ROUTE -> BE: getAllBuildings()
+activate BE
+BE --> ROUTE: sends response with BuildingDTO's and http code 200
+deactivate BE
+ROUTE --> SERV: returns response with BuildingDTO's
+deactivate ROUTE
+SERV --> COMP: returns response with BuildingDTO's
+deactivate SERV
+COMP --> HTML: returns response with BuildingDTO's
+deactivate COMP
+HTML --> FE: returns response with BuildingDTO's
+deactivate HTML
+activate user
+FE --> user: shows list of buildings and their information
+
+
+
+@enduml

@@ -1,0 +1,82 @@
+@startuml
+actor "Client" as user
+participant "FrontEnd" as FE
+participant "CreateAccountHTML" as HTML
+participant "CreateAccountComponent" as COMP
+participant "AuthService" as SERV
+participant "UserRoute" as ROUTE
+participant "UserController" as UC
+participant "UserService" as US
+participant "RoleRepo" as RREPO
+participant "UserRepo" as REPO
+participant "UserMap" as MAPPER
+
+activate user
+user -> FE: asks to create an account
+activate FE
+FE -> HTML: renders the HTML (auth/create)
+activate HTML
+HTML -> COMP: renders the component data
+activate COMP
+COMP --> HTML : sends the component data
+deactivate COMP
+HTML --> FE: sends the HTML form
+deactivate HTML
+FE --> user: shows the HTML form
+deactivate FE
+user -> FE: fills the form
+note over FE: user needs to agree with the privacy policy
+activate FE
+FE -> HTML: sends data
+deactivate FE
+activate HTML
+HTML -> COMP: calls component function
+deactivate HTML
+activate COMP
+COMP -> SERV: calls front end service function
+deactivate COMP
+activate SERV
+SERV -> ROUTE: POST auth/signupClient{body}
+deactivate SERV
+activate ROUTE
+ROUTE -> UC: asks controller to redirect to service
+deactivate ROUTE
+activate UC
+UC -> US: calls service function
+deactivate UC
+activate US
+US -> RREPO: gets the role 'client'
+activate RREPO
+RREPO --> US: returns role
+deactivate RREPO
+note over US: does business logic and validation
+US -> REPO: saves new user
+activate REPO
+REPO --> US: returns object
+deactivate REPO
+US -> MAPPER: gets userDTO
+activate MAPPER
+MAPPER --> US: returns userDTO
+deactivate MAPPER
+US --> UC: returns JSON response with userDTO's and http code 201
+activate UC
+deactivate US
+UC --> ROUTE: returns JSON response with userDTO's and http code 201
+deactivate UC
+activate ROUTE
+ROUTE --> SERV: returns JSON response with userDTO's and http code 201
+deactivate UC
+deactivate ROUTE
+activate SERV
+SERV --> COMP: returns JSON response with userDTO's and http code 201
+deactivate SERV
+activate COMP
+COMP --> HTML: displays success message
+deactivate COMP
+activate HTML
+HTML --> FE: displays success message
+deactivate HTML
+activate FE
+FE --> user: displays success message
+
+@enduml

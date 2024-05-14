@@ -1,0 +1,40 @@
+<!-- view-path.component.html -->
+<div class="view-path-container">
+    <h2>Get Path Between Two Rooms</h2>
+  
+    <form (submit)="viewPath()">
+  
+      <!-- Select to enter room1 -->
+      <div class="form-group">
+        <label for="room1Id">Select First Room:</label>
+        <select id="room1Id" [(ngModel)]="room1Id" name="room1Id" required>
+          <option *ngFor="let room of rooms" [value]="room.identifier">{{ room.identifier }}</option>
+        </select>
+      </div>
+  
+      <!-- Select to enter room2 -->
+      <div class="form-group">
+        <label for="room2Id">Select Second Room:</label>
+        <select id="room2Id" [(ngModel)]="room2Id" name="room2Id" required>
+          <option *ngFor="let room of rooms" [value]="room.identifier">{{ room.identifier }}</option>
+        </select>
+      </div>
+
+      <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+  
+      <!-- Button to Submit Form -->
+      <button type="submit">Get Path</button>
+  
+      <!-- Data Display -->
+      <div *ngIf="path" class="path-data-container">
+        <div class="path">
+          <div *ngFor="let room of path; let last = last">
+            <span>{{ room }}</span>
+            <ng-container *ngIf="!last">&rarr;</ng-container>
+          </div>
+        </div>
+      </div>
+  
+    </form>
+  </div>
+  

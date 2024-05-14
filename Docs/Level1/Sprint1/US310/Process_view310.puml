@@ -1,0 +1,15 @@
+@startuml
+
+actor "Campus Manager" as CM
+participant "<<System C4>>\nRobDroneGo" as RDG
+
+activate CM
+
+CM -> RDG: Sends Room data
+activate RDG
+RDG -> RDG: Creates Room
+RDG --> CM: Sends success/failure message
+deactivate RDG
+
+
+@enduml

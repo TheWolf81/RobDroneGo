@@ -1,0 +1,36 @@
+<div class="create-robot-container">
+    <h2>Create a New Robot</h2>
+  
+    <form (submit)="createNewRobot()">
+      <!--Nickname Input -->
+      <div class="form-group">
+        <label for="nickname">Nickname:</label>
+<!-- Example input using ngModel -->
+<input type="text" id="nickname" [(ngModel)]="nickname" name="nickname" required>
+      </div>
+
+      <!-- stateOfRobot Input -->
+      <div class="form-group">
+        <label for="stateOfRobot">State of Robot:</label>
+        <select  id="stateOfRobot" [(ngModel)]="stateOfRobot" name="stateOfRobot" required>
+          <option [value]="true">Active</option>
+          <option [value]="false">Inactive</option>
+        </select>
+      </div>
+  
+      <!-- typeOfRobotId Input -->
+    
+      <div class="form-group">
+        <label for="typeOfRobotId">Select Type of Robot :</label>
+        <select  id="typeOfRobotId" [(ngModel)]="typeOfRobotId" name="typeOfRobotId" required>
+          <option *ngFor="let typeOfRobot of typeOfRobots" [value]="typeOfRobot.domain_id">{{ typeOfRobot.brand }}{{" "}}{{ typeOfRobot.model}}</option>
+        </select>
+      </div>
+      <!-- Button to Create Robot -->
+      <button type="submit">Create Robot</button>
+  
+      <!-- Error Message Display -->
+      <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+    </form>
+  </div>
+  

@@ -1,0 +1,24 @@
+<div class="task-container">
+    <div class="task-square" *ngFor="let task of tasks">
+        <div class="task-info">
+            <div class="task-code">
+                <h3>Task:{{ task.taskId }}</h3>
+            </div>
+            <div class="task-details">
+                <div class = "detail">
+                    <h3>Type: {{ task.taskType }}</h3>
+                </div>
+                <div class = "detail">
+                    <h3>Origin: {{ task.location1 }}</h3>
+                </div>
+                <div class = "detail">
+                    <h3>Destination: {{ task.location2 }}</h3>
+                </div>
+                <div class = "detail">
+                    <h3>Requested by: {{ task.email }}</h3>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

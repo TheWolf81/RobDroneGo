@@ -1,0 +1,81 @@
+@startuml
+participant "User" as user
+participant "UI" as UI
+participant "Routing" as ROUT
+participant "Modules" as Model
+participant "ModuleRouting" as ModelRouting
+participant "Componet.html" as html
+participant "componet.ts" as data 
+participant "Service" as service
+participant "DataMaster" as Master
+activate user
+user -> UI : pede para criar uma Passagem entre 2 Edifícios
+activate UI
+UI -> ROUT : buscar pagina ao modelo correto
+activate ROUT
+ROUT -> Model : buscar pagina ao modelo correto
+activate Model
+Model -> ModelRouting : buscar pagina ao modelo correto
+activate ModelRouting
+ModelRouting -> html : buscar pagina ao modelo correto
+activate html
+html -> data : buscar dados
+activate data
+data -> service : buscar dados
+activate service
+service -> Master : buscar dados por http request
+activate Master
+Master --> service 
+deactivate Master
+service --> data
+
+deactivate service
+data --> html
+deactivate data
+html --> ModelRouting
+deactivate html
+ModelRouting --> Model
+deactivate ModelRouting
+Model --> ROUT
+deactivate Model
+ROUT --> UI
+UI --> user: asks to Select Floors to creat the hallow conection
+deactivate UI
+deactivate user
+
+user -> UI : Select Floors to creat the hallow conection and sbmits it
+activate user
+activate UI
+UI -> ROUT : submit data 
+activate ROUT
+ROUT -> Model : submit data
+activate Model
+Model -> ModelRouting : submit data
+activate ModelRouting
+ModelRouting -> html : submit data
+activate html
+html -> data : submit data
+activate data
+data -> service : submit data
+activate service
+service -> Master : submit data by http request
+activate Master
+Master --> service: send 200
+deactivate Master
+service --> data: send 200
+deactivate service
+data --> html: send 200
+deactivate data
+html --> ModelRouting: send 200
+deactivate html
+ModelRouting --> Model: send 200
+deactivate ModelRouting
+Model --> ROUT: send 200
+deactivate Model
+ROUT --> UI: send 200
+deactivate ROUT
+UI --> user: send 200
+deactivate UI
+deactivate user
+
+@enduml

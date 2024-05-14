@@ -1,0 +1,63 @@
+@startuml
+
+actor "Client" as C
+participant "Client's browser" as CB
+participant "App Router " as AR
+participant "Delete Account View" as DAV
+participant "Delete Account Component" as DAC
+participant "Delete Account Service" as DAS
+participant "userRouter" as URo
+participant "userController" as UC
+participant "userService" as US
+participant "userRepo" as UR
+
+
+activate C
+C -> CB : Selects "Delete account" option
+activate CB
+CB -> AR : Request "Delete account" page
+activate AR
+AR -> DAV : Request "Delete account" page
+activate DAV
+DAV --> AR : Return "Delete account" page
+deactivate DAV
+AR --> CB : Return "Delete account" page
+deactivate AR
+CB --> C : Show "Delete account" page and request email-password combination
+deactivate CB
+C -> CB : Fills data and click "Delete Account" button
+deactivate CB
+C -> CB : Clicks "Delete Account data" button
+activate CB
+CB -> DAV : Sends data to view
+activate DAV
+DAV -> DAC : Maps data between view and component's model
+activate DAC
+DAC -> DAS : Request delete account 
+activate DAS
+DAS --> URo : Http Request delete account
+activate URo
+URo -> UC : sends data to controller (email-password combination)
+activate UC
+UC -> US : Sends control to service
+activate US
+US -> UR : verifies email-password combination
+activate UR
+UR --> US : confirms email-password combination
+deactivate UR
+US --> UR: Request delete account
+activate UR
+UR --> UR : Deletes account
+UR --> US : Return success / fail code
+deactivate UR
+US --> UC : Return success / fail code
+deactivate US
+UC --> URo : Return success / fail code
+deactivate UC
+URo --> DAS : Return http response
+deactivate URo
+DAS --> CB : Return success / fail message
+deactivate DAS
+CB --> C : Show success / fail message
+deactivate CB
+@enduml

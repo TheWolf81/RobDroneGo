@@ -1,0 +1,51 @@
+@startuml
+
+left to right direction
+actor "Fleet manager" as fleetmanager
+actor "Campus manager" as campusmanager
+
+"US150\nCreate building" as (usecase1)
+"US160\nEdit building" as (usecase2)
+"US170\nList all buildings" as (usecase3)
+"US180\nList buildings with max and min floors" as (usecase4)
+"US190\nCreate floor" as (usecase5)
+"US200\nEdit floor" as (usecase6)
+"US210\nList floors of a building" as (usecase7)
+"US220\nList floors of building with passageways" as (usecase9)
+"US230\nUpload floor map" as (usecase10)
+"US240\nCreate passageway" as (usecase11)
+"US250\nEdit passageway" as (usecase12)
+"US260\nList passageways between 2 buildings" as (usecase13)
+"US270\nCreate elevator" as (usecase14)
+"US280\nEdit elevator" as (usecase15)
+"US290\nList elevators in a building" as (usecase16)
+"US310\nCreate Room" as (usecase17)
+"US350\nCreate new type of robot" as (usecase18)
+"US360\nCreate Robot" as (usecase19)
+"US370\nInhibit a Robot" as (usecase20)
+"US380\nList Robots by designation or task that it can execute" as (usecase21)
+
+campusmanager --> usecase1
+campusmanager --> usecase2
+campusmanager --> usecase3
+campusmanager --> usecase4
+campusmanager --> usecase5
+campusmanager --> usecase6
+campusmanager --> usecase7
+campusmanager --> usecase9
+campusmanager --> usecase10
+campusmanager --> usecase11
+campusmanager --> usecase12
+campusmanager --> usecase13
+campusmanager --> usecase14
+campusmanager --> usecase15
+campusmanager --> usecase16
+campusmanager --> usecase17
+fleetmanager --> usecase18
+fleetmanager --> usecase19
+fleetmanager --> usecase20
+fleetmanager --> usecase21
+
+
+
+@enduml

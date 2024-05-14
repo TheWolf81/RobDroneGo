@@ -1,0 +1,58 @@
+@startuml
+
+actor Postman as p
+participant Controller as c
+participant Service as s
+participant Authentication_Module as am
+participant Repository as r
+participant Context as ctx
+
+activate p
+p -> c : "patch" http request with token to /api/Task/Approve/{id} or /api/Task/Deny/{id}
+activate c
+c -> s : verify token's role
+activate s
+s -> am : sends token to authentication module
+activate am
+am -> am : gets user from token
+note right : this process is better described in package "MIDDLEWARE_AND_TOKEN_LOGIC"
+am --> s : returns user data
+deactivate am
+s -> s : checks if user has role "TaskManager"
+alt user has role "TaskManager"
+s -> r : gets task with id from request
+activate r
+r -> ctx : gets task from dbSet "Tasks"
+activate ctx
+ctx --> r : returns task
+deactivate ctx
+r --> s : returns task
+deactivate r
+s -> s : switches task's status to "Approved" or "Denied", depending on request
+s -> r : sends updated task
+activate r
+r -> ctx : saves updated task in dbSet "Tasks"
+activate ctx
+ctx --> r : returns success / error
+deactivate ctx
+r --> s : returns success / error
+deactivate r
+s --> c : returns success / error
+deactivate s
+c --> p : returns success / error
+deactivate c
+
+
+
+else user has no role "TaskManager"
+activate s
+s --> c : returns error "Unauthorized"
+deactivate s
+activate c
+c --> p : returns error "Unauthorized"
+deactivate c
+end
+deactivate p
+
+
+@enduml

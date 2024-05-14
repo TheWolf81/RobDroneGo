@@ -1,0 +1,62 @@
+
+- Roboisep são robots. droneisep são drones.
+- De momento apenas existem dois tipos de tarefas conhecidas que o sistema deve suportar: vigilância e entrega de objectos. quando criam um tipo de robot deve ser possivel identificar qual ou quais destas tarefas esse tipo de robot pode executar.
+- Podem existir várias passagens entre edificios. 
+- O objetivo deste requisito é permitir consultar quais as passagens existentes entre dois edificios. se nada for indicado devem ser devolvidas todas as passagens entre todos os edificios. se for indicado um par de edificos devem apenas ser devolvidas as passagens entre esses dois edifcios.
+- Uma vez que as passagens são bidirecionais, uma passagem entre o edificio B e o I, significa que se pode atravessar de B para I ou de I para B. o par de edificios utilizado para filtrar esta consulta não implica nenhum tipo de restrição no sentido da passagem.
+- De momento todos os robots da frota apenas suportam estes dois tipos de tarefas. a existirem novos tipos de tarefas será necessáiro desenvolvimento especifico para tal. Em consequência não existem "tarefas em geral"
+
+    As tarefas de vigilância caracterizam-se por indicar qual o edificio e piso(s) que se pretende vigiar bem como o número de contacto em caso de incidente. tipicamente o segurança irá requisitar que um robot "dê uma volta pelos pisos X, Y e Z do edificio N". 
+    Caso o robot detete alguma situação anómala, o robot irá enviar um SMS para o contacto indicado (*)
+    As tarefas de "piclup & delivery" caracterizam-se por indicar qual a sala que se pretende de pickup e qual a sala de delivery, bem como um nome e um contacto para pickup e outro para delivery. deve também ser indicado um código de confirmação que a pessoa 
+    que receberá deverá introduzir no painel do robot. adicionalmente deve ser indicada uma descrição da entrega, ex., "Marcadores de cor vermelha (1x) e azul (2x)"
+
+    (*) fora do âmbito do protótipo
+
+- Cada Robot possui um número de série do fabricante e que deve ser registado quando se cria o robot no sistema. cada robot é identificado por um código e um nickname atribuidos pelo administrador. Por exemplo, um robot da marca X com número de série 1234567 tem o código "picker-0001" e o nickname 
+"Robert" enquanto um outro robot da marca Y com número de série 456789 tem o código "sec-A-001" e o nickname "Jason"
+
+    o número de série é único para cada robot da mesma marca
+
+- o requisito 150 Criar edificio permite criar um edificio, exemplo, edificio "B", com um nome opcional e com uma breve descrição (ex., "departamento de engenharia informática") indicando a dimensão máxima de cada piso em termos de células (ex., 10 x 10)
+-  requisito 190 Criar piso permite definir um piso para um dos edificios criados anteriormente, por exemplo, o piso 1 do edificio B com uma breve descrição (ex., "salas TP")
+- o requisito 230 Carregar mapa de piso permite ao utlizador fazer upload de um ficheiro descrevendo o mapa de um dado piso. esse ficheiro deve ser validado se tem a estrutura correta e se obdece ao tamanho máximo definido aquando da criação do edificio
+- o requisito 310 Criar sala permite definir um sala num dado piso de um edificio, exemplo sala "B310" no 3º piso do edificio B, com uma categorização dessa sala (Gabinete, Anfiteatro, Laboratório, Outro) e uma breve descrição, ex., "Laboratório de Engenharia de Qualidade"
+
+- a funcionalidade de carregamento do mapa é complementar a esses dois requisitos e permite fazer o upload da planta (mapa) do piso para a posterior visualização. são requisitos independentes mas que para o sistema funcionar toda a informação deve estar presente já que a informação que cada requisito refere é necessária para o sistema funcionar
+
+- de um ponto de vista funcional pretende-se que seja possivel inibir ou desinibr um robot e que essa informação seja devidamente utilizada nos restantes casos de uso. por exemplo, um robot inibido não pode executar tarefas.
+
+- o código do edificio é obrigatório, no máximo 5 caracteres, letras e digitos, podendo conter espaços no meio
+    
+    o nome do edificio é opcional, no máximo 50 caracteres alfanuméricos
+    breve descrição com 255 caracteres
+
+requisito 160 - editar edificio - todas as informações à exceção do código do edificio
+
+requisito 200 - editar piso - todas as informações à exceção do edificio a que o piso se refere
+
+requisito 250 - editar passagem - todas as informações
+
+requisito 280 - editar elevador - todas as informações à exceção do edificio a que o piso se refere
+
+código identificativo, obrigatório, alfanumerico, max 30 caracteres, único no sistema
+
+nickname, obrigatório, obrigatório, alfanumerico, max 30 caracteres, único no sistema 
+
+tipo de robot, obrigatório
+
+número de série, obrigatório, alfanumerico, max 50 caracteres, único para um dado tipo de robot
+
+descrição, opcional, alfanumerico, max. 250 caracteres
+
+- não existem limites. podem existir pisos subteraneos, ex., piso -1. a breve descrição é opcional e no máximo terá 250 caracteres
+
+- o nome da sala deve ser único
+
+- de momento as salas são retângulares e apenas têm uma porta
+
+
+
+
+

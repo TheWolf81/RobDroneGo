@@ -1,0 +1,40 @@
+<div class="create-hallway-connection-container">
+  <h2>List Hallway Connections between 2 Buildings</h2>
+
+  <form (submit)="ListarPassagensBtwene2Buildings()">
+    <!--BulidingId1 Input -->
+   
+    <div class="form-group">
+      <label for="BuildingId1">Select Building 1:</label>
+      <select id="BuildingId1" [(ngModel)]="BuildingId1" name="BuildingId1" required>
+        <option *ngFor="let building of buildings" [value]="building.domain_id">{{ building.code }}</option>
+      </select>
+    </div>
+   
+    <div class="form-group">
+      <label for="BuildingId2">Select Building 2 :</label>
+      <select id="BuildingId2" [(ngModel)]="BuildingId2" name="BuildingId2" required>
+        <option *ngFor="let building of buildings" [value]="building.domain_id">{{ building.code }}</option>
+      </select>
+    </div>
+
+    <!-- Button to ListarPassagensBtwene2Buildings-->
+    <button type="submit">List Hallway Connections between 2 Buildings</button>
+
+    <!-- Error Message Display -->
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+  </form>
+
+  <!-- Data Display -->
+  <div class="slide">
+    <div class="list-slide" *ngFor="let list of data">
+        <div class="list-square">
+            <h3>Hallway Connection</h3>
+            <p>Hallway Connection: {{ list.FloorId1 }} - {{list.FloorId2}}</p>
+            <p>Floor1: {{list.FloorId1}}</p>
+            <p>Floor2: {{ list.FloorId2 }}</p>
+            <p>Building1: {{list.BuildingId1}}</p>
+            <p>Building2: {{ list.BuildingId2 }}</p>
+    </div>
+  </div> 
+</div>

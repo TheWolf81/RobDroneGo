@@ -1,0 +1,12 @@
+<div class="task-container">
+    <h2>Tasks List </h2>
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+      <!-- Data Display -->
+      <div class="slide">
+        <div class="robot-slide" *ngFor="let robot of List">
+            <div class="robot-square">
+                <h3>Task</h3>
+                <p> {{ robot }}</p>
+        </div>
+      </div>  
+</div>

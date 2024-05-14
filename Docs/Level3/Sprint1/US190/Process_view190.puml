@@ -1,0 +1,63 @@
+@startuml
+participant "<<Container C4>>\nFleet+Campus Management" as RDG
+participant "Routing" as ROUT
+participant "Controller" as CTR
+participant "Service" as Serv
+participant "FloorRepository" as FREPO
+participant "Floor" as DOMAIN
+participant "BuildingRepository" as BREPO
+participant "Database" as DB
+participant "Mapper" as Mapper
+--> RDG : Post request: "/api/floor/create"
+activate RDG
+RDG -> ROUT : Route to "/api/floor/create"
+activate ROUT
+ROUT -> CTR : Call "createFloor" method
+activate CTR
+CTR -> Serv : Call "createFloor" method\n(Using request body as DTO)
+activate Serv
+Serv -> BREPO : Verify if the Floor's building exists using exists method
+activate BREPO
+BREPO -> DB : Contact the Database
+activate DB
+DB --> BREPO : Return the result of the verification
+deactivate DB
+BREPO -> Serv : Return the result of the verification (if error, end the process)
+deactivate BREPO
+Serv -> FREPO : Verify if the Floor's Building Id has a Floor with the same number
+activate FREPO
+FREPO -> DB : Contact the Database
+activate DB
+DB --> FREPO : Return the result of the verification
+deactivate DB
+FREPO -> Serv : Return the result of the verification (if error, end the process)
+deactivate FREPO
+Serv -> DOMAIN : Create a new Floor
+note left of DOMAIN
+Does the necessary parameter validation
+end note
+activate DOMAIN
+DOMAIN -> Serv : Return the created Floor
+deactivate DOMAIN
+Serv -> FREPO : Call "save" method\n(Using the created Floor)
+activate FREPO
+FREPO -> Mapper : Map the Floor to persistence data model
+activate Mapper
+Mapper -> FREPO : Return the mapped Floor
+deactivate Mapper
+FREPO -> DB : Save the Floor
+activate DB
+DB --> FREPO : Return the saved Floor
+deactivate DB
+FREPO --> Serv : Return the saved Floor
+deactivate FREPO
+Serv --> CTR : Return the saved Floor
+deactivate Serv
+CTR --> ROUT : Return the saved Floor
+deactivate CTR
+ROUT --> RDG : Return the saved Floor (JSON)
+deactivate ROUT
+<-- RDG: Return response: saved Floor in JSON format
+deactivate RDG
+
+@enduml

@@ -1,0 +1,13 @@
+{"groundTextureUrl":"./../../assets/textures/ground.jpg","wallTextureUrl":"../../../assets/textures/wall.jpg","elevatorTextureUrl":"../../../assets/textures/elevator.jpg","emergencyExitTextureUrl":"../../../assets/textures/emergencyExit.jpg","exitTextureUrl":"../../../assets/textures/exit.jpg","size":{"width":8,"height":7},
+"map":
+[
+    [3, 2, 2, 2, 2, 3, 4, 2, 1],
+    [1, 0, 0, 0, 0, 1, 0, 0, 1],
+    [2, 2, 2, 0, 2, 2, 0, 2, 1],
+    [0, 0, 0, 0, 0, 0, 0, 0, 7],
+    [3, 2, 2, 2, 2, 2, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1, 0, 1],
+    [9, 0, 0, 0, 0, 0, 1, 0, 1],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2]
+],
+"initialPosition": [0, 3],"initialDirection": 0.0,"exitLocation": [3, 8],"elevatorLocations": [0, 6]}

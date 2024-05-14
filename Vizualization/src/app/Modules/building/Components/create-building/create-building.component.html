@@ -1,0 +1,34 @@
+<div class="create-building-container">
+    <h2>Create a New Building</h2>
+  
+    <form (submit)="createBuilding()">
+      <div class="form-group">
+        <!-- Code Input -->
+        <label for="code">Code:</label>
+        <input type="text" id="code" placeholder="*max 5 characters" [(ngModel)]="code" name="code" required>
+      </div>
+      <div class="form-group">
+        <!-- Description Input -->
+        <label for="description">Description:</label>
+        <input type="text" id="description" placeholder="*max 255 characters" [(ngModel)]="description" name="description">
+      </div>
+      <div class="form-group">
+        <!-- Max_length Input -->
+        <label for="max_length">Max length:</label>
+        <input type="number"  id="max_length" placeholder="*must be positive" [(ngModel)]="max_length" name="max_length" min="1" required>
+      </div>
+      <div class="form-group">
+        <!-- Max_width Input -->
+        <label for="max_width">Max width:</label>
+        <input type="number" id="max_width" placeholder="*must be positive" [(ngModel)]="max_width" name="max_width" min="1" required>
+      </div>
+
+      <!-- Button to Create Building -->
+      <button type="submit">Create Building</button>
+  
+      <!-- Error Message Display -->
+      <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+      <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+    </form>
+  </div>
+  

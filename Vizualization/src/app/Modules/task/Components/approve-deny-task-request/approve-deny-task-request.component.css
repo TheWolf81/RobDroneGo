@@ -1,0 +1,79 @@
+.task-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  h2 {
+    margin-bottom: 20px;
+  }
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+form {
+    max-width: 400px;
+    margin: 0 auto;
+}
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+input, textarea, select {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 4px;
+}
+
+.approveButton{
+    background-color: #157e4a;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.approveButton:hover{
+    background-color: #0fc862;
+}
+
+.denyButton{
+    background-color: #841818;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.denyButton:hover{
+    background-color: #c80f0f;
+}
+.cool_buttons{
+    list-style: none;
+    margin-top: 10px;
+
+}
+
+.cool_buttons li{
+    display: inline-block;
+    padding: 0px 20px;
+}
+.success-message {
+    color: #008000;
+    margin-top: 5px;
+  }
+
+.error-message {
+    color: red;
+    margin-top: 5px;
+}

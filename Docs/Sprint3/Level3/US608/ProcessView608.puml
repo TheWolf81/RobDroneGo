@@ -1,0 +1,27 @@
+@startuml
+
+actor User as user
+participant ThumbRaiser as app
+participant Maze as mz
+
+activate user
+user -> app: plays game and encounters an elevator
+activate app
+app -> mz: foundElevator()
+activate mz
+mz -> app : true
+deactivate mz
+app -> app : elevatorSequence()
+app -> user : asks for floor to go
+deactivate app
+activate user
+user -> app : chooses floor
+activate app
+app -> app : loadMapElevator()
+app -> user : updates and loads new floor
+deactivate app
+
+
+
+
+@enduml

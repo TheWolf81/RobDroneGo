@@ -1,0 +1,29 @@
+<!-- list-floor-by-building.component.html -->
+
+<div class="list-floor-container">
+  <h2>List Floors by Building</h2>
+
+  <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+  <!-- Textbox to enter the Building ID -->
+  <div class="form-group">
+    <label for="buildingId">Select Building:</label>
+    <select id="buildingId" [(ngModel)]="buildingId" name="buildingId" required>
+      <option *ngFor="let building of buildings" [value]="building.domain_id">{{ building.code }}</option>
+    </select>
+  </div>
+
+  <!-- Button to trigger the floor list retrieval -->
+  <button (click)="listFloorsByBuilding()">List Floors</button>
+
+    <!-- Data Display -->
+    <div class="slide">
+        <div class="floor-slide" *ngFor="let floor of data">
+            <div class="floor-square">
+                <h3> Name: {{ floor.name }}</h3>
+                <p>Description: {{ floor.description }}</p>
+                <p>Area: {{ floor.area }}</p>
+                <p>FloorNumber: {{ floor.floorNumber }}</p>
+        </div>
+      </div>  
+</div>

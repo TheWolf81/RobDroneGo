@@ -1,0 +1,52 @@
+@startuml
+participant "<<Container C4>>\nFleet+Campus Management" as RDG
+participant "Routing" as ROUT
+participant "Controller" as CTR
+participant "Service" as SERV
+participant "Repository" as REPO 
+participant "Elevator" as DOMAIN
+participant "Mapper" as Mapper
+participant "Database" as DB
+
+--> RDG : Put request "/api/building/edit/:domainId"
+activate RDG
+RDG -> ROUT : Route to "api/building/edit/:domainId"
+activate ROUT
+ROUT -> CTR : Call "editBuilding" method
+activate CTR
+CTR -> SERV: Call "editBuilding" method (domainId as parameter, buildingDTO as body)
+activate SERV
+SERV -> REPO: Find building (using domainId)
+activate REPO
+REPO -> DB: Contact database
+activate DB
+DB --> REPO: Return building
+deactivate DB
+REPO --> SERV: Return building
+deactivate REPO
+SERV --> SERV: Updates building with the body information (buildingDTO)
+SERV -> REPO: Calls "save" method (updated building as parameter)
+activate REPO
+REPO -> Mapper: Map building to persistence data model
+activate Mapper
+Mapper --> REPO: Return mapped building
+deactivate Mapper
+REPO -> DB: Save building
+activate DB
+DB --> REPO: Return saved building
+deactivate DB
+REPO --> SERV: Return saved building
+deactivate REPO
+SERV --> CTR: Return saved building
+deactivate SERV
+CTR --> ROUT: Return saved building
+deactivate CTR
+ROUT --> RDG: Return saved building(JSON)
+deactivate ROUT
+<<-- RDG: response: saved building(JSON)
+deactivate RDG
+
+
+
+
+@enduml

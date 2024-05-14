@@ -1,0 +1,21 @@
+<div class="list-building-container">
+    <div class="building-square" *ngFor="let building of componentBuildingList">
+        <div class="building-info">
+            <div class="building-code">
+                <h3>Building:{{ building.code }}</h3>
+            </div>
+            <div class="building-details">
+                <div class = "description">
+                    <h3>Description: {{ building.description }}</h3>
+                </div>
+                <div class = "max-length">
+                    <h3>Max Length: {{ building.max_length }}</h3>
+                </div>
+                <div class = "max-width">
+                    <h3>Max Width: {{ building.max_width }}</h3>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

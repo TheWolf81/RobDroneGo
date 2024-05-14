@@ -1,0 +1,94 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+actor "Admin" as user
+participant "FrontEnd" as FE
+participant "ApproveOrDenyRequestsHTML" as HTML
+participant "ApproveOrDenyRequestsComponent" as COMP
+participant "AuthService" as SERV
+participant "UserRoute" as ROUTE
+participant "UserController" as UC
+participant "UserService" as US
+participant "UserRepo" as REPO
+participant "UserMap" as MAPPER
+
+activate user
+user -> FE: asks to create an account
+activate FE
+note over FE: will check if the user is authenticated \n if he has permission to execute the action
+FE -> HTML: renders the HTML (auth/approveOrDenyRequests)
+activate HTML
+HTML -> COMP: renders the component data
+activate COMP
+COMP -> SERV: asks to get the pending requests
+activate SERV
+SERV -> ROUTE: asks to get the pending requests through a GET request
+activate ROUTE
+ROUTE -> UC: asks to get the pending requests
+activate UC
+UC -> US: calls the method that gets the pending requests
+activate US
+US -> REPO: asks to get all the requests
+activate REPO
+REPO --> US: sends the requests
+deactivate REPO
+US --> US : filters the requests to get only the pending ones
+US -> MAPPER: asks to map the requests
+activate MAPPER
+MAPPER --> US: sends the DTO requests
+deactivate MAPPER
+US --> UC: sends the DTO requests
+deactivate US
+UC --> ROUTE: sends the DTO requests
+deactivate UC
+ROUTE --> SERV: sends the DTO requests
+deactivate ROUTE
+SERV --> COMP: sends the DTO requests
+deactivate SERV
+COMP --> HTML: shows the DTO requests
+deactivate COMP
+HTML --> FE: sends the HTML form
+deactivate HTML
+FE --> user: shows the HTML form
+deactivate FE
+user -> FE: selects a request and selects the status (Approved or Denied) \nand them clicks on the submit button
+activate FE
+FE -> HTML: sends the data
+activate HTML
+HTML -> COMP: sends the user's email and the new status
+activate COMP
+COMP -> SERV: asks to update the request
+activate SERV
+SERV -> ROUTE: asks to update the request through a PUT request
+activate ROUTE
+ROUTE -> UC: asks to update the request
+activate UC
+UC -> US: calls the method that updates the request
+activate US
+US -> REPO: asks to get the user by email
+activate REPO
+REPO --> US: sends the user
+deactivate REPO
+note over US: will check if the user exists and update the request, \naccording to the business rules
+US -> REPO: asks save the edited request
+activate REPO
+REPO --> US: sends the edited request
+deactivate REPO
+US -> MAPPER: asks to map the edited request
+activate MAPPER
+MAPPER --> US: sends the DTO of edited request
+deactivate MAPPER
+US --> UC: sends the DTO of edited request
+deactivate US
+UC --> ROUTE: sends the DTO of edited request
+deactivate UC
+ROUTE --> SERV: sends the DTO of edited request and 201 status code
+deactivate ROUTE
+SERV --> COMP: sends the DTO of edited request and 201 status code
+deactivate SERV
+COMP --> HTML: sends a success message
+deactivate COMP
+HTML --> FE: sends a success message
+deactivate HTML
+FE --> user: shows a success message
+@enduml

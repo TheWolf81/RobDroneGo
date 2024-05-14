@@ -1,0 +1,34 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+actor "User" as user
+participant "BackEnd" as BE
+participant "Route" as Route
+participant "isAuth" as MW
+participant "config" as config
+participant "jwt" as jwt
+
+activate user
+user -> BE : asks to make an http request
+activate BE
+BE -> Route : requests the action
+activate Route
+Route -> MW : checks if the user is authenticated
+activate MW
+MW -> config : gets the secret to sign the JWTs
+activate config
+config --> MW : returns the secret
+deactivate config
+MW --> MW : checks if the token is present and stores it
+MW -> jwt : signs the jwt
+activate jwt
+jwt --> MW : returns the signed jwt
+deactivate jwt
+MW --> Route : returns a success/failure response
+deactivate MW
+Route --> BE : returns a success/failure response
+deactivate Route
+BE --> user : returns a success/failure response
+
+
+@enduml

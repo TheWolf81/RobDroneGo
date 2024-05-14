@@ -1,0 +1,85 @@
+@startuml US 1120 Upload floor map
+actor "Campus Manager" as user
+participant "FrontEnd" as FE
+participant "UploadFloorMapHTML" as HTML
+participant "UploadFloorMapComponent" as COMP
+participant "FloorService" as SERV
+participant "FloorRoute" as ROUTE
+participant "BuildingRoute" as ROUTE2
+participant "BackEnd" as BE
+
+activate user
+user -> FE: asks to upload a floor map
+activate FE
+FE -> HTML: /floor/uploadMap
+activate HTML
+HTML -> COMP: ngOnInit()
+activate COMP
+COMP -> SERV: listBuildings()
+activate SERV
+SERV -> ROUTE2: GET /building/getAll
+activate ROUTE2
+ROUTE2 -> BE: getAllBuildings()
+activate BE
+BE --> ROUTE2: sends response with BuildingDTO's and http code 200
+deactivate BE
+ROUTE2 --> SERV: returns response with BuildingDTO's
+deactivate ROUTE2
+SERV --> COMP: returns response with BuildingDTO's
+deactivate SERV
+COMP --> HTML: returns response with BuildingDTO's
+deactivate COMP
+HTML --> FE: returns response with BuildingDTO's
+deactivate HTML
+FE --> user: shows list of building codes and asks to choose one
+deactivate FE
+user -> FE: chooses a building code
+activate FE
+FE -> HTML: inputs data
+activate HTML
+HTML -> COMP: onBuildingChange()
+activate COMP
+COMP -> COMP: loadFloorsByBuilding()
+COMP -> SERV: listFloorsByBuilding()
+activate SERV
+SERV -> ROUTE: GET floor/getFloorsByBuildingId/:building_id
+activate ROUTE
+ROUTE -> BE: getFloorsByBuildingId()
+activate BE
+BE --> ROUTE: sends response with FloorDTO's and http code 200
+deactivate BE
+ROUTE --> SERV: returns response with FloorDTO's
+deactivate ROUTE
+SERV --> COMP: returns response with FloorDTO's
+deactivate SERV
+COMP --> HTML: returns response with FloorDTO's
+deactivate COMP
+HTML --> FE: returns response with FloorDTO's
+deactivate HTML
+FE --> user: shows list of floor names and asks to choose one
+deactivate FE
+user -> FE: chooses a floor
+activate FE
+FE -> HTML: inputs data
+activate HTML
+HTML -> COMP: uploadFloorMap()
+activate COMP
+COMP -> SERV: uploadFloorMap()
+activate SERV
+SERV -> ROUTE: PATCH /floor/loadMap/:domainId/(jsonBody)
+activate ROUTE
+ROUTE -> BE: updateWithMap()
+activate BE
+BE --> ROUTE: sends response with FloorDTO and http code 200
+deactivate BE
+ROUTE --> SERV: returns response with FloorDTO and http code 200
+deactivate ROUTE
+SERV --> COMP: returns response with FloorDTO
+deactivate SERV
+COMP --> HTML: returns response with FloorDTO
+deactivate COMP
+HTML --> FE: returns response with FloorDTO
+deactivate HTML
+FE --> user: shows success message
+
+@enduml

@@ -1,0 +1,15 @@
+@startuml
+
+actor "Campus Manager" as CM
+participant "<<System C4>>\nRobDroneGo" as RDG
+
+activate CM
+
+CM -> RDG: Request to list all floors of building x
+activate RDG
+RDG -> RDG: Gets all floors of building x
+RDG --> CM: Shows list of floors
+deactivate RDG
+
+
+@enduml

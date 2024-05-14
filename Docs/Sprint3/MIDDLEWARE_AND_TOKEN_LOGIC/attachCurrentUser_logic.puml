@@ -1,0 +1,39 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+actor "User" as user
+participant "BackEnd" as BE
+participant "Route" as Route
+participant "attachCurrentUser" as MW
+participant "UserRepository" as UR
+
+activate user
+user -> BE : asks to make an http request
+activate BE
+BE -> Route : requests the action
+activate Route
+Route -> MW : asks to attach the current user
+activate MW
+MW --> MW : checks if there's a token \nparameter in the request
+MW -> UR : asks to check if the user exists by using the id in the token
+activate UR
+UR --> MW : returns true/false
+deactivate UR
+alt user exists
+MW -> UR : asks to find the user object by using the id in the token
+activate UR
+UR --> MW : returns the user object
+deactivate UR
+MW --> MW : attaches the user info to the request
+end if
+MW --> Route : returns the request/failure message
+deactivate MW
+Route --> BE : returns the request/failure message
+deactivate Route
+BE --> user : returns the request/failure message
+
+
+
+
+
+@enduml

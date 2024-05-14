@@ -1,0 +1,84 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+@startuml
+actor "Client" as user
+participant "FrontEnd" as FE
+participant "AuthHTML" as HTML
+participant "AuthComponent" as COMP
+participant "Blob" as BLOB
+participant "JSON" as JSON
+participant "FileSaver" as FS
+participant "AuthService" as SERV
+participant "UserRoute" as ROUTE
+participant "UserController" as UC
+participant "UserService" as US
+participant "UserRepo" as REPO
+participant "UserMap" as MAPPER
+
+activate user
+user -> FE: asks to access auth menu
+activate FE
+note over FE: will check if the user is able to access \nthis feature through auth guard logic
+FE -> HTML: renders the HTML
+activate HTML
+HTML -> COMP: renders the component data
+activate COMP
+COMP --> HTML: returns the component data
+deactivate COMP
+HTML --> FE: returns the HTML
+deactivate HTML
+FE --> user: returns the HTML
+deactivate FE
+user -> FE: asks to dowanload the file
+activate FE
+FE --> HTML: activates the download button
+activate HTML
+HTML -> COMP: will call the download method
+activate COMP
+COMP -> SERV: will call the download method
+activate SERV
+SERV -> ROUTE: requests a copy of the user data
+activate ROUTE
+note over ROUTE: will check again if the user is authenticated \nthrough middleware/token logic
+ROUTE -> UC: requests a copy of the user data
+activate UC
+UC -> US: calls the method that handles this requests
+activate US
+US -> REPO: tries to find the user object \nthrough the email sent in the token
+activate REPO
+REPO --> US: returns the user object
+deactivate REPO
+US -> MAPPER: maps the user object to a DTO
+activate MAPPER
+MAPPER --> US: returns the DTO
+deactivate MAPPER
+US --> US: takes out info such as the password, \nrole, status for security reasons
+US --> UC: returns the DTO
+deactivate US
+UC --> ROUTE: returns the DTO
+deactivate UC
+ROUTE --> SERV: returns the DTO and a 200 status code
+deactivate ROUTE
+SERV --> COMP: returns the DTO and a 200 status code
+deactivate SERV
+COMP --> JSON: stringifies the result data into a JSON, using \nJSON lib from node modules
+activate JSON
+JSON --> COMP: returns the JSON
+deactivate JSON
+COMP --> BLOB: uses Blob, a node modules lib, to construct \na file-like object on the client-side
+activate BLOB
+BLOB --> COMP: returns the blob
+deactivate BLOB
+COMP --> FS: uses saveAs method, to save the blob as a file on the client-side
+activate FS
+FS --> COMP:
+deactivate FS
+COMP --> HTML: returns a success message and the file
+deactivate COMP
+HTML --> FE: returns the success message and the file
+deactivate HTML
+FE --> user: returns the success message and the file
+deactivate FE
+
+@enduml

@@ -1,0 +1,45 @@
+<!-- edit-floor.component.html -->
+
+<div class="edit-floor-container">
+  <h2>Edit Floor</h2>
+
+  <form (submit)="editFloor()">
+
+    <!-- Select to enter the Building -->
+    <div class="form-group">
+      <label for="buildingId">Select Building:</label>
+      <select id="buildingId" [(ngModel)]="buildingId" name="buildingId" (change)="onBuildingChange()" required>
+        <option *ngFor="let building of buildings" [value]="building.domain_id">{{ building.code }}</option>
+      </select>
+    </div>
+
+    <!-- Select to enter the Floor -->
+    <div class="form-group">
+      <label for="floorId">Select Floor:</label>
+      <select id="floorId" [(ngModel)]="floorId" name="floorId" required>
+        <option *ngFor="let floor of floors" [value]="floor.DomainId">{{ floor.name }}</option>
+      </select>
+    </div>
+
+    <!-- Name Input -->
+    <div class="form-group">
+      <label for="floorName">New Name:</label>
+      <input type="text" id="floorName" [(ngModel)]="floorName" name="floorName" required>
+    </div>
+
+    <!-- Description Input -->
+    <div class="form-group">
+      <label for="floorDescription">New Description:</label>
+      <input type="text" id="floorDescription" [(ngModel)]="floorDescription" name="floorDescription" required>
+    </div>
+
+    <!-- Button to Submit Form -->
+    <button type="submit">Edit Floor</button>
+
+    <!-- Error Message Display -->
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+    <!-- Success Message Display -->
+    <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+  </form>
+</div>

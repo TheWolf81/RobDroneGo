@@ -1,0 +1,41 @@
+<div class="task-container">
+    <h2>Tasks List </h2>
+    <form (submit)="getListOftask()">
+        <!--FloorId1 Input -->
+        <!-- NG Input -->
+        <div class="form-group">
+            <label for="NG">Numero de novas Geracoes:</label>
+            <input type="text" id="NG" [(ngModel)]="NG" name="NG" required>
+        </div>
+        <!-- DP Input -->
+        <div class="form-group">
+            <label for="DP">Dimensao da Populacao:</label>
+            <input type="text" id="DP" [(ngModel)]="DP" name="DP" required>
+        </div>
+        <!-- NG Input -->
+        <div class="form-group">
+            <label for="P1">Probabilidade de Cruzamento:</label>
+            <input type="text" id="P1" [(ngModel)]="P1" name="P1" required>
+        </div>
+        <!-- NG Input -->
+        <div class="form-group">
+            <label for="P2">Probabilidade de Mutacao:</label>
+            <input type="text" id="P2" [(ngModel)]="P2" name="P2" required>
+        </div>
+
+        <button type="submit">List order of execution of tasks</button>
+        <!-- Error Message -->
+        <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+    </form>
+
+
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+    <!-- Data Display -->
+    <div class="slide">
+        <div class="task-slide" *ngFor="let floor of List">
+            <div class="task-square">
+                <h3> Task: {{ floor }}</h3>
+            </div>
+        </div>
+    </div>
+</div>

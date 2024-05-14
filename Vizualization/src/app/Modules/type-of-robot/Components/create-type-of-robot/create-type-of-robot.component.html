@@ -1,0 +1,41 @@
+<!-- Add this in the head section of your index.html -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-">
+
+<!-- create-type-of-robot.component.html -->
+
+<div class="container create-type-of-robot-container">
+  <h2>Create a New Type of Robot</h2>
+
+  <form (submit)="createNewTypeOfRobot()">
+    <!-- Brand Input -->
+    <div class="form-group">
+      <label for="brand">Brand:</label>
+      <input type="text" id="brand" [(ngModel)]="brand" name="brand" required>
+    </div>
+
+    <!-- Model Input -->
+    <div class="form-group">
+      <label for="model">Model:</label>
+      <input type="text" id="model" [(ngModel)]="model" name="model" required>
+    </div>
+
+    <!-- Task Type Selection with Checkboxes -->
+    <div class="form-group">
+      <label>Task Types:</label>
+      <div class="checkbox-group">
+        <label>
+          <input type="checkbox" name="taskType" value="pickup&delivery" [(ngModel)]="pickupdelivery"> pickup&delivery
+        </label>
+        <label>
+          <input type="checkbox" name="taskType" value="surveillance" [(ngModel)]="surveillance"> surveillance
+        </label>
+      </div>
+    </div>
+
+    <!-- Button to Create Type of Robot -->
+    <button type="submit">Create Type of Robot</button>
+
+    <!-- Error Message Display -->
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+  </form>
+</div>

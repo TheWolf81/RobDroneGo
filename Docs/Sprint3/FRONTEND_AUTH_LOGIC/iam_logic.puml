@@ -1,0 +1,59 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+actor "Client" as user
+participant "FrontEnd" as FE
+participant "CreateAccountHTML" as HTML
+participant "CreateAccountComponent" as COMP
+'participant "AuthService" as SERV
+'note over SERV : The name of the service was changed to \nAuthServiceManual because Auth0 has a \nservice with the same name
+participant "AuthService (Auth0)" as AUTH0
+participant "Auth0 / Microsoft / Google APIs" as API
+
+activate user
+user -> FE: asks to create an account
+activate FE
+FE -> HTML: renders the HTML (auth/create)
+activate HTML
+HTML -> COMP: renders the component data
+activate COMP
+COMP --> HTML : sends the component data
+deactivate COMP
+HTML --> FE: sends the HTML form
+deactivate HTML
+FE --> user: shows the HTML form
+deactivate FE
+user -> FE: clicks login with Auth0 button
+activate FE
+FE -> HTML: activates the button
+activate HTML
+HTML -> COMP: calls the method to login with Auth0
+deactivate HTML
+activate COMP
+COMP -> AUTH0: calls the method to login with a pop-up
+deactivate COMP
+activate AUTH0
+AUTH0 --> FE: returns the login page
+deactivate AUTH0
+FE --> user: shows the login page
+user -> FE: attempts to login with Microsoft or Google
+FE -> API: sends data
+activate API
+API --> API : validates the data
+API --> AUTH0: returns a login object and Auth0 token
+deactivate API
+activate AUTH0
+AUTH0 --> COMP: returns the login object and Auth0 token\nfills the form with the data
+deactivate AUTH0
+activate COMP
+COMP --> HTML: fills the form with the data
+deactivate COMP
+activate HTML
+HTML --> FE: returns the HTML form with the data
+deactivate HTML
+FE --> user: shows the HTML form with the data
+deactivate FE
+user -> FE: fills the rest of the form and submits successfully ....\n(same logic as US20)
+activate FE
+
+@enduml

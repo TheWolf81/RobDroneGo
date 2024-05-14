@@ -1,0 +1,11 @@
+@startuml
+
+left to right direction
+
+(Create new Elevator in a Building) as (x)
+
+:Fleet Manager: as CM
+
+CM -- (x)
+
+@enduml

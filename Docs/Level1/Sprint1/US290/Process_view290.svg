@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="288px" preserveAspectRatio="none" style="width:520px;height:288px;background:#FFFFFF;" version="1.1" viewBox="0 0 520 288" width="520px" zoomAndPan="magnify"><defs/><g><rect fill="#FFFFFF" height="105.0547" style="stroke:#181818;stroke-width:1.0;" width="10" x="59" y="92.6094"/><rect fill="#FFFFFF" height="73.7031" style="stroke:#181818;stroke-width:1.0;" width="10" x="336" y="114.9609"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="64" x2="64" y1="82.6094" y2="206.6641"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="341" x2="341" y1="82.6094" y2="206.6641"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="112" x="5" y="79.5332">Campus Manager</text><ellipse cx="64" cy="13.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/><path d="M64,21.5 L64,48.5 M51,29.5 L77,29.5 M64,48.5 L51,63.5 M64,48.5 L77,63.5 " fill="none" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="112" x="5" y="220.1973">Campus Manager</text><ellipse cx="64" cy="231.7734" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/><path d="M64,239.7734 L64,266.7734 M51,247.7734 L77,247.7734 M64,266.7734 L51,281.7734 M64,266.7734 L77,281.7734 " fill="none" style="stroke:#181818;stroke-width:0.5;"/><rect fill="#E2E2F0" height="49.2188" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="114" x="284" y="32.3906"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="100" x="291" y="53.9238">&lt;&lt;System C4&gt;&gt;</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="84" x="299" y="71.5332">RobDroneGo</text><rect fill="#E2E2F0" height="49.2188" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="114" x="284" y="205.6641"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="100" x="291" y="227.1973">&lt;&lt;System C4&gt;&gt;</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="84" x="299" y="244.8066">RobDroneGo</text><rect fill="#FFFFFF" height="105.0547" style="stroke:#181818;stroke-width:1.0;" width="10" x="59" y="92.6094"/><rect fill="#FFFFFF" height="73.7031" style="stroke:#181818;stroke-width:1.0;" width="10" x="336" y="114.9609"/><polygon fill="#181818" points="324,110.9609,334,114.9609,324,118.9609,328,114.9609" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;" x1="69" x2="330" y1="114.9609" y2="114.9609"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="248" x="76" y="110.1045">Sends request to list elevators in building x</text><line style="stroke:#181818;stroke-width:1.0;" x1="346" x2="388" y1="145.3125" y2="145.3125"/><line style="stroke:#181818;stroke-width:1.0;" x1="388" x2="388" y1="145.3125" y2="158.3125"/><line style="stroke:#181818;stroke-width:1.0;" x1="347" x2="388" y1="158.3125" y2="158.3125"/><polygon fill="#181818" points="357,154.3125,347,158.3125,357,162.3125,353,158.3125" style="stroke:#181818;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="160" x="353" y="140.4561">Gets elevators for building x</text><polygon fill="#181818" points="80,184.6641,70,188.6641,80,192.6641,76,188.6641" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="74" x2="340" y1="188.6641" y2="188.6641"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="129" x="86" y="183.8076">Shows list of elevators</text><!--MD5=[b68f333ea2a18c636e9eeb337c24cbc2]
+@startuml
+
+actor "Campus Manager" as CM
+participant "<<System C4>>\nRobDroneGo" as RDG
+
+activate CM
+
+CM -> RDG: Sends request to list elevators in building x
+activate RDG
+RDG -> RDG: Gets elevators for building x
+RDG - -> CM: Shows list of elevators
+deactivate RDG
+
+
+@enduml
+
+PlantUML version 1.2022.7(Mon Aug 22 18:01:30 WEST 2022)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg>

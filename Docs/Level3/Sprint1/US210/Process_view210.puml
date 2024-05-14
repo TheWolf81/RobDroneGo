@@ -1,0 +1,39 @@
+@startuml
+participant "<<Container C4>>\nCampus Management" as RDG
+participant "Routing" as ROUT
+participant "Controller" as CTR
+participant "Service" as Serv
+participant "Repository" as REPO
+participant "Mapper" as Mapper
+participant "Database" as DB
+
+--> RDG : Get request: "/api/floor/getFloorsByBuildingId/:building_id"
+activate RDG
+RDG -> ROUT : Route to "/api/floor/getFloorsByBuildingId/:building_id"
+activate ROUT
+ROUT -> CTR : Call "getFloorsByBuildingId" method
+activate CTR
+CTR -> Serv : Call "getFloorsByBuildingId" method\n(Using building_id as parameter)
+activate Serv
+Serv -> REPO : Find Floor record(s), for a certain Building\n(Using building_id as parameter)
+activate REPO
+REPO -> DB : Contact the database
+activate DB
+DB --> REPO : Return the Floor record(s) (if found)
+deactivate DB
+REPO -> Mapper : Map the Floor record(s) to FloorDTO
+activate Mapper
+Mapper -> REPO : Return the mapped Floor(s)
+deactivate Mapper
+REPO --> Serv : Return the FloorDTO(s)
+deactivate REPO
+Serv --> CTR : Return the FloorDTO(s)
+deactivate Serv
+CTR --> ROUT : Return the FloorDTO(s)
+deactivate CTR
+ROUT --> RDG : Return the FloorDTO(s) (JSON)
+deactivate ROUT
+<-- RDG: Return response: FloorDTO(s) in JSON format
+deactivate RDG
+
+@enduml

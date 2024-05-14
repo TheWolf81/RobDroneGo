@@ -1,0 +1,32 @@
+<div class = "load-floor-map-container">
+    <h2>Load Floor Map</h2>
+    <form (submit) = "uploadFloorMap()">
+  
+
+      <div class="form-group">
+        <label for="buildingId">Select Building:</label>
+        <select id="buildingId" [(ngModel)]="buildingId" name="buildingId" (change)="onBuildingChange()" required>
+          <option *ngFor="let building of buildings" [value]="building.domain_id">{{ building.code }}</option>
+        </select>
+      </div>
+  
+      <div class="form-group">
+        <label for="floorId">Select Floor:</label>
+        <select id="floorId" [(ngModel)]="floorId" name="floorId" required>
+          <option *ngFor="let floor of floors" [value]="floor.DomainId">{{ floor.name }}</option>
+        </select>
+      </div>
+  
+      <div class="form-group">
+        <label for="floorMazeData">Floor Map</label>
+        <textarea id="floorMazeData" [(ngModel)]="floorMazeData" name="floorMazeData" required></textarea>
+    </div>
+  
+      <button type="Upload Map">Edit Floor</button>
+  
+      <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+    </form>
+  </div>
+
+
+

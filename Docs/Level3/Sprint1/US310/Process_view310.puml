@@ -1,0 +1,51 @@
+@startuml
+participant "<<Container C4>>\nFleet+Campus Management" as RDG
+participant "Routing" as ROUT
+participant "Controller" as CTR
+participant "Service" as Serv
+participant "Repository" as REPO 
+participant "Room" as DOMAIN
+participant "Mapper" as Mapper
+participant "Database" as DB
+--> RDG : Post request: "/api/room/create"
+activate RDG
+RDG -> ROUT : Route to "/api/room/create"
+activate ROUT
+ROUT -> CTR : Call "createRoom" method
+activate CTR
+CTR -> Serv : Call "createRoom" method\n(Using request body as DTO)
+activate Serv
+Serv -> REPO : Verify if the Room's floor exists
+activate REPO
+REPO -> DB : Contact the Database
+activate DB
+DB --> REPO : Return the result of the verification
+deactivate DB
+REPO -> Serv : Return the result of the verification (if error, end the process)
+deactivate REPO
+Serv -> DOMAIN : Create a new Room
+activate DOMAIN
+DOMAIN -> Serv : Return the created Room
+deactivate DOMAIN
+Serv -> REPO : Call "save" method\n(Using the created Room)
+activate REPO
+REPO -> Mapper : Map the Room to persistence data model
+activate Mapper
+Mapper -> REPO : Return the mapped Room
+deactivate Mapper
+REPO -> DB : Save the Room
+activate DB
+DB --> REPO : Return the saved Room
+deactivate DB
+REPO --> Serv : Return the saved Room
+deactivate REPO
+Serv --> CTR : Return the saved Room
+deactivate Serv
+CTR --> ROUT : Return the saved Room
+deactivate CTR
+ROUT --> RDG : Return the saved Room (JSON)
+deactivate ROUT
+<-- RDG: Return response: saved Room in JSON format
+deactivate RDG
+
+@enduml

@@ -1,0 +1,19 @@
+<div class="list-elevator-container">
+    <h2>List Elevator in Building</h2>
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+    <!-- Textbox to enter the Building ID -->
+  <label for="building_id">Building ID:</label>
+  <select id="buildingId" [(ngModel)]="building_id" name="buildingId" (change)="onBuildingChange()" required>
+    <option *ngFor="let building of buildings" [value]="building.domain_id">{{ building.code }}</option>
+  </select>
+
+      <!-- Data Display -->
+      <div class="slide">
+        <div class="elevator-slide" *ngFor="let elevator of data">
+            <div class="elevator-square">
+                <h3>Elevator</h3>
+                <p>Floors Served: {{elevator.floors_servedId}}</p>
+                <p>Description: {{ elevator.description }}</p>
+        </div>
+      </div>  
+</div>

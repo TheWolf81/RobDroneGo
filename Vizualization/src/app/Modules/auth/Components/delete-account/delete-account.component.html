@@ -1,0 +1,19 @@
+<div class="auth-container">
+    <h2>Delete account</h2>
+
+    <form (submit)="deleteAccount()">
+
+        <p>Are you sure you want to delete your account?</p>
+        <p>By deleting your account, your consent will be automatically withdrawn and all your data will be deleted. This action cannot be undone.</p>
+    
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required [(ngModel)]="email">
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required [(ngModel)]="password">
+
+        <button type="submit">Delete Account</button>
+
+        <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+        <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+

@@ -1,0 +1,91 @@
+@startuml
+skinparam classAttributeIconSize 1
+hide empty members
+hide circle
+left to right direction
+
+
+class Robot {
+- nickname
+- stateOfRobot
+}
+
+class TypeOfRobot {
+- brand
+- model
+}
+
+class Building {
+- code
+- description
+- max_length
+- max_width
+}
+
+class Floor {
+- floorNumber
+- description
+- area
+- name
+}
+
+class Room {
+- category
+- identifier
+- description
+}
+
+class Elevator {
+- description
+}
+
+class Task{
+- username
+- contact
+}
+
+class HallwayConnection {}
+
+class FloorMap {
+- size
+- map
+- exits
+- elevators
+- exitLocation
+}
+
+class VigilanceTask {}
+
+class ObjectDeliveryTask {}
+
+class TaskType {}
+
+
+
+"Robot" "1" -- "1" "TypeOfRobot" : has >
+"Robot" "1" -- "1" "Building" : operates in >
+
+"Building" "1" -- "1..*" "Floor" : is in <
+"Building" "1" -- "1" "Elevator" : operates in <
+"Elevator" "1" -- "1..*" "Floor" : serves >
+"Building" "2" -- "1" "HallwayConnection" : connects <
+
+"Floor" "1" -- "1..*" "Room" : is in <
+"Floor" "1" -- "1" "FloorMap" : has >
+
+"TypeOfRobot" "1" -- "1..*" "TaskType" : performs >
+
+"Task" "1" -- "1" "VigilanceTask" : is <
+"Task" "1" -- "1" "ObjectDeliveryTask" : is <
+"Task" "1" -- "1" "TaskType" : has >
+
+"VigilanceTask" "1" -- "1" "Floor" : is associated with >
+"ObjectDeliveryTask" "1" -- "2" "Room" : is associated with >
+
+
+"HallwayConnection" "1" -- "2" "Floor" : connects >
+
+
+
+
+@enduml

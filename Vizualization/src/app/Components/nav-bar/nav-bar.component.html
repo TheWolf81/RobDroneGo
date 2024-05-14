@@ -1,0 +1,20 @@
+<header>
+    <a href="/">
+    <img class="logo"src="..\assets\logo3.png" alt="logo">
+</a>
+<nav>
+    <ul class="nav__links">
+        <li><a *ngIf="userRole === 'CampusManager' || userRole === 'SystemAdministrator'" routerLink="/building" routerLinkActive="active">Building</a></li>
+        <li><a *ngIf="userRole === 'CampusManager' || userRole === 'SystemAdministrator'" routerLink="/floor" routerLinkActive="active">Floor</a></li>
+        <li><a *ngIf="userRole === 'CampusManager' || userRole === 'SystemAdministrator'" routerLink="/room" routerLinkActive="active">Room</a></li>
+        <li><a *ngIf="userRole === 'CampusManager' || userRole === 'SystemAdministrator'" routerLink="/elevator" routerLinkActive="active">Elevator</a></li>
+        <li><a *ngIf="userRole === 'FleetManager' || userRole === 'SystemAdministrator'" routerLink="/robot" routerLinkActive="active">Robot</a></li>
+        <li><a *ngIf="userRole === 'FleetManager' || userRole === 'SystemAdministrator'" routerLink="/typeOfRobot" routerLinkActive="active">Type of Robot</a></li>
+        <li><a *ngIf="userRole === 'CampusManager' || userRole === 'SystemAdministrator'" routerLink="/hallwayConnection" routerLinkActive="active">Hallway Connection</a></li>
+        <li><a *ngIf="userRole === 'SystemAdministrator' || userRole === 'CampusManager'" routerLink="/3DVisualization" routerLinkActive="active">3D Visualization</a></li>
+        <li><a *ngIf="userRole === 'TaskManager' || userRole === 'SystemAdministrator' || userRole === 'Client'" routerLink="/task" routerLinkActive="active">Task</a></li>
+        <li><a routerLink="/auth" routerLinkActive="active">Account</a></li>
+        <li><a routerLink="/privacyPolicyAndTermsOfUse" routerLinkActive="active">Privacy Policy & Terms of Use</a></li>
+    </ul>
+</nav>
+</header>

@@ -1,0 +1,61 @@
+@startuml
+
+actor "Client" as C
+participant "Client's browser" as CB
+participant "App Router " as AR
+participant "Edit Account Data View" as EAV
+participant "Edit Account Data Component" as EAC
+participant "Edit Account Data Service" as EAS
+participant "userRouter" as URo
+participant "userController" as UC
+participant "userService" as US
+participant "userRepo" as UR
+participant "userMapper" as UM
+
+activate C
+C -> CB : Selects "Edit account data" option
+activate CB
+CB -> AR : Request "Edit account data" page
+activate AR
+AR -> EAV : Request "Edit account data" page
+activate EAV
+EAV --> AR : Return "Edit account data" page
+deactivate EAV
+AR --> CB : Return "Edit account data" page
+deactivate AR
+CB --> C : Show "Edit account data" page and request data to edit 
+deactivate CB
+C -> CB : Fills data and click "Edit data" button
+activate CB
+CB -> EAV : Sends data to view
+activate EAV
+EAV -> EAC : Maps data between view and component's model
+activate EAC
+EAC -> EAS : Request edit account data
+activate EAS
+EAS --> URo : Http Request edit account data
+activate URo
+note left : This http request has an authentication token in the header\n which verifies in the backend if the user is a \n"Client", authorizing the operation and using\n the data to associate the correct user to the data
+URo -> UC : sends data to controller
+activate UC
+UC -> US : Sends data to service as DTO
+activate US
+US -> UR : "save" account data
+activate UR
+UR --> US : Return success / fail message
+deactivate UR
+US --> UC : Return success / fail code
+deactivate US
+UC --> URo : Return success / fail code
+deactivate UC
+URo --> EAS : Return http response
+deactivate URo
+EAS --> EAC : Return success / fail message
+deactivate EAS
+EAC --> EAV : Return success / fail message
+deactivate EAC
+EAV --> CB : Return success / fail message
+deactivate EAV
+CB --> C : Show success / fail message
+deactivate CB
+@enduml

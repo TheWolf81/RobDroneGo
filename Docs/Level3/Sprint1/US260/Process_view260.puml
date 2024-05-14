@@ -1,0 +1,36 @@
+@startuml
+
+
+participant "<<System C4>>\nRobDroneGo" as RDG
+participant "Routing" as ROUT
+participant "Controller" as CTR
+participant "Aplication Service" as AppServ
+participant "Repository" as REPO 
+participant "Database" as DB
+participant "Hallway Connection" as DOMAIN
+participant "DTO" as DTO
+participant "Mapper" as Mapper
+
+--> RDG : Post "/DOMAIN/get"
+activate RDG
+RDG -> ROUT : ListarEdificiosPassagens
+activate ROUT
+ROUT -> CTR : ListarEdificiosPassagens
+CTR -> AppServ : ListarEdificiosPassagens(BuildingID1 , buildingID2)
+activate AppServ
+
+AppServ -> REPO :findAll()
+activate REPO
+REPO --> AppServ : findAll()
+deactivate REPO
+AppServ->AppServ: put in a list all Buildings
+AppServ --> CTR : allHallwayConnectionBetwentwoBuildings as DTO[]
+deactivate AppServ
+CTR --> ROUT : allHallwayConnectionBetwentwoBuildings return DTO[]
+deactivate CTR
+ROUT --> RDG : allHallwayConnectionBetwentwoBuildings return DTO[]
+deactivate ROUT
+deactivate RDG
+
+
+@enduml

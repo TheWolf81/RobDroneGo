@@ -1,0 +1,21 @@
+<div class="inhibit-robot-container">
+  <h2>Inhibir a Robot</h2>
+
+  <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+  <div class="form-group">
+    <label for="domainId">Select Robot:</label>
+    <select  id="domainId" [(ngModel)]="domainId" name="domainId" required>
+      <option *ngFor="let robot of robots" [value]="robot.DomainId">{{ robot.nickname }}</option>
+    </select>
+  </div>
+
+
+
+
+  <!-- Button to Inibir Robot -->
+  <button (click)="inibirRobot()">Inibir Robot</button>
+
+
+  <!-- Error Message Display -->
+</div>

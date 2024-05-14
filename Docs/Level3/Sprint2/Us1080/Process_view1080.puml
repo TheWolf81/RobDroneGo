@@ -1,0 +1,37 @@
+@startuml
+actor "Campus Manager" as user
+participant "FrontEnd" as FE
+participant ListBuildingMaxMinFloorsHTML as HTML
+participant "ListBuildingMaxMinFloorsComponent" as COMP
+participant "FloorService" as SERV
+participant "BuildingRoute" as ROUTE
+participant "BackEnd" as BE
+
+activate user
+user -> FE: asks to list buildings with max and min floors
+activate FE
+FE -> HTML: /building/listMaxMinFloors
+activate HTML
+HTML -> COMP: listBuildingsWithMaxAndMinFloors()
+activate COMP
+COMP -> SERV: listBuildingsWithMaxAndMinFloors()
+activate SERV
+SERV -> ROUTE: GET /building/getBuildingsByMaxAndMinFloors/:min/:max
+activate ROUTE
+ROUTE -> BE: getBuildingsByMaxAndMinFloors()
+activate BE
+BE --> ROUTE: sends response with BuildingDTO's and http code 200
+deactivate BE
+ROUTE --> SERV: returns response with BuildingDTO's
+deactivate ROUTE
+SERV --> COMP: returns response with BuildingDTO's
+deactivate SERV
+COMP --> HTML: returns response with BuildingDTO's
+deactivate COMP
+HTML --> FE: returns response with BuildingDTO's
+deactivate HTML
+FE --> user: shows list of buildings with max and min floors
+
+
+
+@enduml

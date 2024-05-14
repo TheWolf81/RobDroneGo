@@ -1,0 +1,16 @@
+'https://plantuml.com/sequence-diagram
+' As a campus manager, I want to list all buildings
+@startuml US170_ListBuildings_1
+actor "Campus Manager" as CM
+participant "<<System C4>>\nRobDroneGo" as RDG
+
+activate CM
+
+CM -> RDG: 1. requests to list all buildings
+activate RDG
+RDG -> RDG: 2. retrieves all buildings
+RDG -> CM: 3. shows all buildings
+deactivate RDG
+
+
+@enduml

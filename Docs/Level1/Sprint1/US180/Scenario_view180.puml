@@ -1,0 +1,11 @@
+@startuml
+
+left to right direction
+
+(List Buildings with max and min of Floors) as (x)
+
+:Campus Manager: as CM
+
+CM -- (x)
+
+@enduml

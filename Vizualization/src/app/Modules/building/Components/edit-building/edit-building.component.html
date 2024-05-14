@@ -1,0 +1,46 @@
+<div class = "edit-building-container">
+
+    <h2>Edit Building</h2>
+
+    <form (submit) = "editBuilding()">
+        
+        <div class="form-group">
+            <label for="buildingDomainID">Select Building:</label>
+            <select id="buildingDomainID" name="buildingDomainID" (change)="onBuildingChange($event)">
+                <option *ngFor="let building of buildings" [ngValue]="building.domain_id">{{ building.code }}</option>
+              </select>
+              
+              
+          </div>
+
+        <div class = "form-group">
+            <label for = "buildingCode"> Building Code</label>
+            <input type = "text" id = "buildingCode" [(ngModel)] = "buildingCode" name = "buildingCode" required>
+        </div>
+
+        <div class = "form-group">
+            <label for = "buildingDescription">Building Description</label>
+            <input type = "text" id = "buildingDescription" [(ngModel)] = "buildingDescription" name = "buildingDescription" required>
+        </div>
+
+        <div class = "form-group">
+            <label for = "buildingMaxLength">Building Max Length</label>
+            <input type = "number" id = "buildingMaxLength" [(ngModel)] = "buildingMaxLength" name = "buildingMaxLength" required>
+        </div>
+
+        <div class = "form-group">
+            <label for = "buildingMaxWidth">Building Max Width</label>
+            <input type = "number" id = "buildingMaxWidth" [(ngModel)] = "buildingMaxWidth" name = "buildingMaxWidth" required>
+        </div>
+
+        <button type = "submit">Edit Building</button>
+
+        <!-- resetForm() -->
+        <button type = "button" (click) = "resetForm()">Reset Form</button>
+
+        <div *dgIf = "errorMessage">
+            {{errorMessage}}
+        </div>
+
+    </form>
+</div>

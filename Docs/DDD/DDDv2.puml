@@ -1,0 +1,133 @@
+@startuml DMV
+skinparam classAttributeIconSize 1
+hide empty members
+hide circle
+left to right direction
+
+
+
+package Robot_<<aggregate>>{
+    class "<<Root>>\nRobot"{
+        - robotStatus
+    }
+    class "<<Value Object>>\nNickname"{
+
+    }
+    "<<Root>>\nRobot" "1" --> "1" "<<Value Object>>\nNickname"
+}
+
+package TypeOfRobot_<<aggregate>>{
+    class "<<Root>>\nTypeOfRobot" {
+        - code
+        - brand
+    }
+    class "<<Entity>>\nTaskOfRobot"{
+
+    }
+    "<<Root>>\nTypeOfRobot" "1" --> "1..*" "<<Entity>>\nTaskOfRobot"
+
+}
+
+package Task_<<aggregate>>{
+    class "<<Root>>\nTask"{
+
+    }
+
+    class "<<Entity>>\nVigilanceTask"{
+        - floors
+    }
+
+    class "<<Entity>>\nDeliveryTask"{
+        - pickupRoom
+        - deliveryRoom
+        - pickupName
+        - deliveryName
+    }
+    class "<<Value Object>>\nPhoneNumber"{
+        
+    }
+
+    "<<Root>>\nTask" "1" <|-- "1" "<<Entity>>\nVigilanceTask"
+    "<<Root>>\nTask" "1" <|-- "1" "<<Entity>>\nDeliveryTask"
+    "<<Entity>>\nDeliveryTask" "1" --> "1" "<<Value Object>>\nPhoneNumber" : pickupContact
+    "<<Entity>>\nDeliveryTask" "1" --> "1" "<<Value Object>>\nPhoneNumber" : deliveryContact
+    "<<Entity>>\nVigilanceTask" "1" --> "1..*" "<<Value Object>>\nPhoneNumber"
+
+}
+
+package "Building_<<aggregate>>"{
+    class "<<Root>>\nBuilding"{
+        - code
+        - max_dimension
+    }
+    class "<<Value Object>>\nName"{
+    }
+    class "<<Value Object>>\nDescription"{
+    }
+    "<<Root>>\nBuilding" "1" --> "1" "<<Value Object>>\nName"
+    "<<Root>>\nBuilding" "1" --> "1" "<<Value Object>>\nDescription"
+}
+
+package "Elevator_<<aggregate>>"{
+    class "<<Root>>\nElevator"{
+        -identifier
+        
+
+    }
+
+    "<<Root>>\nElevator" "1" --> "1" "<<Root>>\nBuilding" : belongs to
+    
+    }
+
+package "Floor_<<aggregate>>"{
+    class "<<Root>>\nFloor"{
+        - number
+        - description
+    }
+    class "<<Entity>>\nMap"{
+    }
+
+    class "<<Entity>>\nRoom"{
+        - category
+        - identifier
+        - description
+    }
+    note top of "<<Entity>>\nRoom" : ex. of identifier: B301; \n Category can be:\n*Bureau\n*Classroom
+
+
+
+    "<<Root>>\nFloor" "1" --> "1" "<<Entity>>\nMap"
+    "<<Root>>\nFloor" "1" --> "1..*" "<<Entity>>\nRoom"
+
+}
+
+package "HallwayConnection__<<aggregate>>"{
+
+    class "<<Root>>\nHallwayConnection"{
+        - buildingId1
+        - buildingId2
+        - floorId1
+        - floorId2
+    }
+
+}
+
+    "<<Root>>\nFloor" "1" --> "1..*" "HallwayConnection__<<aggregate>>" : has
+    "<<Root>>\nBuilding" "1" --> "1..*" "HallwayConnection__<<aggregate>>" : connects
+
+
+class "<<Service>>\nTaskRequest"{
+}
+class "<<Service>>\nRouting"{
+}
+
+
+"<<Root>>\nTypeOfRobot" "1" <-- "1" "<<Root>>\nRobot" : has
+"<<Root>>\nTask" "1" <-- "1" "<<Root>>\nRobot" : performs
+"<<Service>>\nTaskRequest" "1" --> "1" "<<Root>>\nTask" : creates (if approved)
+"<<Root>>\nRobot" "*" --> "1" "<<Service>>\nRouting" : Uses
+"<<Service>>\nRouting" "1" --> "1..*" "<<Root>>\nBuilding" : navigates through
+"<<Service>>\nRouting" "1" --> "1" "<<Root>>\nTask" : relates to
+"<<Root>>\nBuilding" "1" <-- "1..*" "<<Root>>\nFloor" : belongs to
+"<<Root>>\nElevator" "1" --> "1..*" "<<Root>>\nFloor" : serves
+@enduml

@@ -1,0 +1,46 @@
+@startuml
+
+actor Postman as p
+participant Controller as c
+participant Service as s
+participant Authentication_Module as am
+participant Repository as r
+participant Context as ctx
+
+activate p
+p -> c : "post" http request with token to /api/Task
+activate c
+c -> s : verify client role
+activate s
+s -> am : sends token to authentication module
+activate am
+am -> am : gets user from token
+note right : this process is better described in package "MIDDLEWARE_AND_TOKEN_LOGIC"
+am --> s : returns user data
+deactivate am
+s -> s : checks if user has role "Client"
+alt user has role "Client"
+s -> r : send task data to repository
+activate r
+r -> ctx : save task data to context dbSet "Tasks"
+activate ctx
+ctx --> r : returns saved task data
+deactivate ctx
+r --> s : returns saved task data
+deactivate r
+s --> c : returns saved task data
+deactivate s
+c --> p : returns saved task data
+deactivate c
+else user has no role "Client"
+activate s
+s --> c : returns error "Unauthorized"
+deactivate s
+activate c
+c --> p : returns error "Unauthorized"
+deactivate c
+end
+deactivate p
+
+
+@enduml

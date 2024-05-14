@@ -1,0 +1,81 @@
+@startuml
+participant "User" as user
+participant "UI" as UI
+participant "Routing" as ROUT
+participant "Modules" as Model
+participant "ModuleRouting" as ModelRouting
+participant "Componet.html" as html
+participant "componet.ts" as data 
+participant "Service" as service
+participant "DataMaster" as Master
+activate user
+user -> UI : pede para listar Pisos de Edifício com Passagem para outros Edifícios
+activate UI
+UI -> ROUT : buscar pagina ao modelo correto
+activate ROUT
+ROUT -> Model : buscar pagina ao modelo correto
+activate Model
+Model -> ModelRouting : buscar pagina ao modelo correto
+activate ModelRouting
+ModelRouting -> html : buscar pagina ao modelo correto
+activate html
+html -> data : buscar dados
+activate data
+data -> service : buscar dados
+activate service
+service -> Master : buscar dados por http request
+activate Master
+Master --> service 
+deactivate Master
+service --> data
+
+deactivate service
+data --> html
+deactivate data
+html --> ModelRouting
+deactivate html
+ModelRouting --> Model
+deactivate ModelRouting
+Model --> ROUT
+deactivate Model
+ROUT --> UI
+UI --> user: mostra a pagina 
+deactivate UI
+deactivate user
+
+user -> UI : pede para listar Pisos de Edifício com Passagem para outros Edifícios 
+activate user
+activate UI
+UI -> ROUT : submit data 
+activate ROUT
+ROUT -> Model : submit data
+activate Model
+Model -> ModelRouting : submit data
+activate ModelRouting
+ModelRouting -> html : submit data
+activate html
+html -> data : submit data
+activate data
+data -> service : submit data
+activate service
+service -> Master : submit data by http request
+activate Master
+Master --> service: lista de Pisos de Edifício com Passagem para outros Edifícios 
+deactivate Master
+service --> data: lista de Pisos de Edifício com Passagem para outros Edifícios 
+deactivate service
+data --> html: lista de Pisos de Edifício com Passagem para outros Edifícios 
+deactivate data
+html --> ModelRouting: lista de Pisos de Edifício com Passagem para outros Edifícios 
+deactivate html
+ModelRouting --> Model: lista de Pisos de Edifício com Passagem para outros Edifícios 
+deactivate ModelRouting
+Model --> ROUT: lista de Pisos de Edifício com Passagem para outros Edifícios 
+deactivate Model
+ROUT --> UI: lista de Pisos de Edifício com Passagem para outros Edifícios 
+deactivate ROUT
+UI --> user: lista de Pisos de Edifício com Passagem para outros Edifícios 
+deactivate UI
+deactivate user
+
+@enduml

@@ -1,0 +1,14 @@
+<div class="list-floors-with-hallway-connections-container">
+  <h2>List Floors With Hallway Connections</h2>
+  <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+  <!-- Data Display -->
+  <div class="slide">
+    <div class="Hallway-slide" *ngFor="let string of data">
+      <div class="Hallway-square">
+        <h3>Hallway-conection</h3>
+        <p>Floor: {{ string }}</p>
+      </div>
+    </div>
+  </div>
+</div>

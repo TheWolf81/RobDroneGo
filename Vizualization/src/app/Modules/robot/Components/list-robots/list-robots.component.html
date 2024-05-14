@@ -1,0 +1,14 @@
+<div class="list-robot-container">
+    <h2>Consult all Robots</h2>
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+      <!-- Data Display -->
+      <div class="slide">
+        <div class="robot-slide" *ngFor="let robot of data">
+            <div class="robot-square">
+                <h3>Device</h3>
+                <p>Nickname: {{ robot.nickname }}</p>
+                <p>State of Robot: {{robot.StateOfRobot}}</p>
+                <p>Type of Robot: {{ robot.typeOfRobotId }}</p>
+        </div>
+      </div>  
+</div>

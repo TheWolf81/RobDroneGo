@@ -1,0 +1,98 @@
+@startuml
+
+actor "Admin" as A
+participant "Admin's browser" as CB
+participant "Create account as Admin Router " as CAR
+participant "Create account as Admin View" as CAV
+participant "Create account as Admin Component" as CAC
+participant "Create account as Admin Service" as CAS
+participant "RoleRoute" as RRo
+participant "RoleController" as RC	
+participant "RoleService" as RS
+participant "RoleRepo" as RR
+participant "userRouter" as URo
+participant "userController" as UC
+participant "userService" as US
+participant "userMapper" as UM
+participant "userRepo" as UR
+
+activate A
+A -> CB : Selects "Create account" option
+activate CB
+CB -> CAR : Request "Create account" page
+activate CAR
+CAR -> CAV : Request "Create account" page
+activate CAV
+CAV -> CAC : Request Roles
+activate CAC
+CAC -> CAS : Request Roles
+activate CAS
+CAS --> RRo : Http Request Roles
+activate RRo
+RRo -> RC : Request Roles
+activate RC
+RC -> RS : Request Roles
+activate RS
+RS -> RR : Get Roles from Repository
+activate RR
+RR --> RS : Return Roles
+deactivate RR
+RS --> RC : Return Roles
+deactivate RS
+RC --> RRo : Return Roles
+deactivate RC
+RRo --> CAS : Return Roles
+deactivate RRo
+CAS --> CAC : Return Roles
+deactivate CAS
+CAC --> CAV : Return Roles
+deactivate CAC
+CAV --> CAR : Return "Create account" page
+deactivate CAV
+CAR --> CB : Return "Create account" page
+deactivate CAR
+CB --> A : Show "Create account" page and request data to create account
+deactivate CB
+A -> CB : Fills data and click "Create account" button
+activate CB
+CB -> CAV : Sends data to view
+activate CAV
+CAV -> CAC : Maps data between view and component's model
+activate CAC
+CAC -> CAS : Request create account
+activate CAS
+CAS --> URo : Http Request create account
+activate URo
+note left : This http request has a token in the header\n which verifies in the backend if the user is a \nSystem Administrator, authorizing the operation
+URo -> UC : sends data to controller
+activate UC
+UC -> US : Sends data to service as DTO
+activate US
+note right: Create all entities needed to create a User
+US -> UM : Map Dto data to domain user entity
+activate UM
+UM -> US: Return mapped user entity
+deactivate UM
+US -> UR : create account
+activate UR
+UR --> US : Return success / fail message
+deactivate UR
+US -> UM : Map domain user entity to Dto
+activate UM
+UM -> US : Return mapped user Dto
+deactivate UM
+US --> UC : Return created account data (only non sensitive data)
+deactivate US
+UC --> URo : Return created account data (only non sensitive data)
+deactivate UC
+URo --> CAS : Return created account data (only non sensitive data)
+deactivate URo
+CAS --> CAC : Return created account data (only non sensitive data)
+deactivate CAS
+CAC --> CAV : Return created account data (only non sensitive data)
+deactivate CAC
+CAV --> CB : Return created account data (only non sensitive data)
+deactivate CAV
+CB --> A : Show created account data (only non sensitive data)\n along with a message indicating that the account was created successfully
+deactivate CB
+@enduml

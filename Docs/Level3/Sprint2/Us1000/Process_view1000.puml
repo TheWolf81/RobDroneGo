@@ -1,0 +1,35 @@
+@startuml
+actor "Campus Manager" as user
+participant "FrontEnd" as FE
+participant "CreateTypeOfRobotHTML" as HTML
+participant "CreateTypeOfRobotComponent" as COMP
+participant "TypeOfRobotService" as SERV
+participant "TypeOfRobotRoute" as ROUTE
+participant "BackEnd" as BE
+
+activate user
+user -> FE: asks to create type of robot
+activate FE
+FE -> HTML: /typeOfRobot/create
+activate HTML
+HTML -> COMP: createTypeOfRobot()
+activate COMP
+COMP -> SERV: createTypeOfRobot()
+activate SERV
+SERV -> ROUTE: POST /typeOfRobot/create/(jsonBody)
+activate ROUTE
+ROUTE -> BE: createTypeOfRobot()
+activate BE
+BE --> ROUTE: sends response with TypeOfRobotDTO's and http code 201
+deactivate BE
+ROUTE --> SERV: sends response with TypeOfRobotDTO's and http code 201
+deactivate ROUTE
+SERV --> COMP: sends response with TypeOfRobotDTO's and http code 201
+deactivate SERV
+COMP --> HTML: sends response with TypeOfRobotDTO's and http code 201
+deactivate COMP
+HTML --> FE: sends response with TypeOfRobotDTO's and http code 201
+deactivate HTML
+FE --> user: shows success message
+
+@enduml

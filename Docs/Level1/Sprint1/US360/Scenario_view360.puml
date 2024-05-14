@@ -1,0 +1,11 @@
+@startuml
+
+left to right direction
+
+(Create a new robot, informing its type, designation, ...) as (x)
+
+:Fleet Manager: as CM
+
+CM -- (x)
+
+@enduml

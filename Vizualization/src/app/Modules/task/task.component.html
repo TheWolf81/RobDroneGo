@@ -1,0 +1,12 @@
+<h1>Task Menu</h1>
+<nav>
+    <ul class="nav__links">
+        <li><a *ngIf="userRole === 'SystemAdministrator'" routerLink="/task/viewPath" routerLinkActive="active">Get Path Between Two Rooms</a></li>
+        <li><a *ngIf="userRole === 'SystemAdministrator' || userRole === 'Client'" routerLink="/task/requestTask" routerLinkActive="active">Request a Task</a></li>
+        <li><a *ngIf="userRole === 'SystemAdministrator' || userRole === 'TaskManager'" routerLink="/task/approveDenyTasks" routerLinkActive="active">Aprove or Deny Task Requests</a></li>
+        <li><a *ngIf="userRole === 'SystemAdministrator' || userRole === 'TaskManager'" routerLink="/task/showRequestedTasks" routerLinkActive="active">Show Requested Tasks</a></li>
+        <li><a *ngIf="userRole === 'SystemAdministrator' || userRole === 'TaskManager'" routerLink="/task/listTasksFiltered" routerLinkActive="active">List Tasks With Filters</a></li>
+        <li><a *ngIf="userRole === 'SystemAdministrator' || userRole === 'TaskManager'" routerLink="/task/melhorSequencia" routerLinkActive="active"> task execution sequence </a></li>
+        <li><a *ngIf="userRole === 'SystemAdministrator' || userRole === 'TaskManager'" routerLink="/task/genetico" routerLinkActive="active">task execution sequence using Genetic Algorithm</a></li>
+    </ul>
+</nav>

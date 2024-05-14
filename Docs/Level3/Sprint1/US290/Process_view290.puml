@@ -1,0 +1,40 @@
+@startuml
+participant "<<Container C4>>\nFleet+Campus Management" as RDG
+participant "Routing" as ROUT
+participant "Controller" as CTR
+participant "Service" as Serv
+participant "Repository" as REPO 
+participant "Mapper" as Mapper
+participant "Database" as DB
+
+--> RDG : Get request: "/api/elevator/get/:buildingId"
+activate RDG
+RDG -> ROUT : Route to "/api/elevator/get/:buildingId"
+activate ROUT
+ROUT -> CTR : Call "getElevatorsInBuiling" method
+activate CTR
+CTR -> Serv : Call "getElevatorsInBuiling" method\n(Using buildingId as parameter)
+activate Serv
+Serv -> REPO : Find Elevator record(s), for a certain building\n(Using buildingId as parameter)
+activate REPO
+REPO -> DB : Contact the database
+activate DB
+DB --> REPO : Return the Elevator record(s) (if found)
+deactivate DB
+REPO -> Mapper : Map the Elevator record(s) to ElevatorDTO
+activate Mapper
+Mapper -> REPO : Return the mapped Elevator(s)
+deactivate Mapper
+REPO --> Serv : Return the ElevatorDTO(s)
+deactivate REPO
+Serv --> CTR : Return the ElevatorDTO(s) 
+deactivate Serv
+CTR --> ROUT : Return the ElevatorDTO(s) 
+deactivate CTR
+ROUT --> RDG : Return the ElevatorDTO(s) (JSON)
+deactivate ROUT
+<-- RDG: Return response: ElevatorDTO(s) in JSON format
+deactivate RDG
+
+@enduml
+

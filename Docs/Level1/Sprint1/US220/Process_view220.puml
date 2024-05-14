@@ -1,0 +1,17 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+actor "Campus Manager" as CM
+participant "<<System C4>>\nRobDroneGo" as RDG
+
+activate CM
+
+CM -> RDG:  requests to List building floors with passage to other buildings
+
+activate RDG
+
+RDG --> CM:  shows the list of floors of the building
+deactivate RDG
+
+deactivate CM
+@enduml

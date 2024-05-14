@@ -1,0 +1,52 @@
+@startuml
+
+
+participant "<<System C4>>\nRobDroneGo" as RDG
+participant "Routing" as ROUT
+participant "Controller" as CTR
+participant "Aplication Service" as AppServ
+participant "Repository" as REPO 
+participant "Database" as DB
+participant "Robot" as ROBOT
+participant "DTO" as DTO
+participant "Mapper" as Mapper
+
+--> RDG : Post "/robot/edit"
+activate RDG
+RDG -> ROUT : inibirRobot
+activate ROUT
+ROUT -> CTR : inibirRobot
+activate CTR
+CTR -> AppServ : inibirRobot(domainID)
+activate AppServ
+AppServ -> REPO : findByDomainId(domainID)
+activate REPO
+REPO --> AppServ : ROBOT
+deactivate REPO
+AppServ -> AppServ : update StateOfRobot to inibido
+AppServ -> REPO :Save()
+activate REPO
+REPO -> DB : Save()
+activate DB
+DB --> REPO : Saved()
+deactivate DB
+REPO --> AppServ : Saved()
+deactivate REPO
+AppServ -> DTO : Robot to DTO
+activate Mapper
+Mapper -> DTO : Robot to DTO
+activate DTO
+DTO --> Mapper : Robot to DTO
+deactivate DTO
+Mapper --> AppServ : Robot to DTO
+deactivate Mapper
+AppServ --> CTR : CreatedRobot as DTO
+deactivate AppServ
+CTR --> ROUT : CreatedRobot return DTO
+deactivate CTR
+ROUT --> RDG : CreatedRobot return DTO
+deactivate ROUT
+deactivate RDG
+
+
+@enduml

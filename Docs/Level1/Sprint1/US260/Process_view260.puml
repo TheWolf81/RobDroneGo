@@ -1,0 +1,21 @@
+
+@startuml
+
+actor "Campus Manager" as CM
+participant "<<System C4>>\nRobDroneGo" as RDG
+
+activate CM
+
+CM -> RDG: 1. requests to Listar passagens entre 2 edifícios
+activate RDG
+
+RDG -> CM: 1.1 asks for the buildings
+
+CM -> RDG: 2. chooses a buildings
+
+RDG -> RDG
+
+RDG -> CM: 2.1 shows the Listar passagens entre 2 edifícios
+
+
+@enduml

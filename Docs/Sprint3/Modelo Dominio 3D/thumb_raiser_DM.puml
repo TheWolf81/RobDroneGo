@@ -1,0 +1,159 @@
+@startuml
+
+package "Thumb_Raiser" {
+    class Thumb_Raiser {
+     + constructor()
+     - scene2D: Scene
+     - scene3D: Scene
+     - Maze() : Maze 
+     - Player() : Player
+     - Lights() : Light
+     - Fog() : Fog
+     - FixedCamera() : Camera
+     - firstPersonCamera() : Camera
+     - thirdPersonCamera() : Camera
+     - topViewCamera() : Camera
+     - renderer: WEBGLRenderer
+     + buildHelpPanel()
+     + buildElevatorPopup()
+     + displayPanel()
+     + setUserInterfaceVisibility()
+     + keyChange(event, state) : void
+     + finalSequence()
+     + elevatorSequence()
+     + colision()
+     + update()
+
+    }
+
+    class Player {
+        + construtor()
+        - loader() : GLTFLoader
+    }
+
+    class Orientation {
+        - h: float
+        - v: float
+        + getH()
+        + setH()
+        + getV()
+        + setV()
+    }
+
+    class Maze {
+        +constructor()
+        - map : int[][]
+        - size : int
+        - elevatorLocation : int[]
+        - initialPosition : int[]
+        - initialDirection 
+        - groundObjects
+        - wallObjects
+        - elevatorObjects
+        - doorObjects
+        - loader() : FileLoader
+        + cellToCartesian(position)
+        + cellToCartesian1(position)
+        + cellToCartesian2(position)
+        + cartesianToCell(position)
+        + distanceToEastWall(position)
+        + distanceToNorthWall(position)
+        + distanceToSouthWall(position)
+        + foundExit(position)
+        + foundElevator(position)	
+        
+    }
+
+    class Light {
+        + constructor()
+        - ambientLight : THREE.AmbientLight
+        - pointLight1 : THREE.PointLight
+        - pointLight2 : THREE.PointLight        
+    }
+
+    class Door {
+        + construtor()
+        - texture 
+        - geometry
+        - material
+    }
+
+    class Ground {
+        + construtor()
+        - texture 
+        - geometry
+        - material
+    }
+
+    class Elevator {
+        + construtor()
+        - texture 
+        - geometry
+        - material
+    }
+
+    class Animations {
+        +constructor()
+        - states
+        - emotes
+        + fadeToAction()
+        + actionFinished()
+        + update()
+    }
+
+    class UserInterface {
+        constructor()
+        - gui : GUI
+        - lightsFolder 
+        - ambientLightController
+        - pointLight1Controller
+        - pointLight2Controller
+        - shadowsFolder
+        - fogFolder
+        - pathFolder
+        + convertMap()
+        + loadMap()
+        + submitPath()
+        + createGUI()
+        + setVisibility()
+    }
+
+    class Camera{
+        +constructor()
+        - viewPort : ViewPort
+        - perspective : THREE.PerspectiveCamera
+        - orthographic : THREE.OrthographicCamera
+        + setViewingParameters()
+        + setProjectionParameters()
+        + setActiveProjection()
+        + initialize()
+        + getViewPort()
+        + setViewPort()
+        + setWindowSize()
+        + updateWindowSize()
+        + setTarget()
+        + updateTarget()
+        + setOrientation()
+        + updateOrientation()
+        + setDistance()
+        + updateDistance()
+        + setZoom()
+        + updateZoom()
+
+    }
+
+
+    Thumb_Raiser --> Player
+    Thumb_Raiser --> Orientation
+    Thumb_Raiser --> Maze
+    Thumb_Raiser --> Light
+    Thumb_Raiser --> Animations
+    Thumb_Raiser --> UserInterface
+    Thumb_Raiser --> Camera
+
+    Maze --> Door
+    Maze --> Ground
+    Maze --> Elevator
+}
+
+@enduml

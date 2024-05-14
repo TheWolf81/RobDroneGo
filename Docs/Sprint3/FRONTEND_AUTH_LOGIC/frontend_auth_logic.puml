@@ -1,0 +1,40 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+actor "User" as user
+participant "AuthGuard\n(VerifyAuthService)" as AG
+participant "AuthenticationService" as ASS
+participant "AuthenticationInterceptor" as AI
+participant "Vizualization" as V
+participant "AuthModule\n(Backend)" as BE
+participant "SomeFunctions' Module" as X
+
+activate user
+user -> AG : Tries to access application's functions
+activate AG
+AG --> user : Forces User to login (redirects to login page)
+deactivate AG
+user -> AG : Sends Login credentials (username & password)
+activate AG
+AG -> ASS : Sends Login credentials (username & password)
+activate ASS
+ASS --> BE : Sends credentials via http to backend module (Auth)
+activate BE 
+BE -> BE : Verifies credentials and generates JWT with 1 hour expiration time
+BE --> ASS : Recieves token via http
+deactivate BE
+ASS -> ASS : stores user in localStorage (Browser-wise), and starts a 60 minute timer
+ASS --> AG : sends control to guard
+deactivate ASS
+AG --> user : allows user to view main page and access menus
+deactivate AG
+user -> AI : tries to perform perform an action (i.e. send a request to the backend)
+activate AI
+AI -> AI : intercepts request and adds user token (localStorage) to the header of the http request
+AI --> X : forwards updated http request to destination
+deactivate AI
+activate X
+X --> user : returns the result (usual flow)
+deactivate X
+deactivate user
+@enduml

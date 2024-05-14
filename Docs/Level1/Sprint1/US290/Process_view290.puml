@@ -1,0 +1,15 @@
+@startuml
+
+actor "Campus Manager" as CM
+participant "<<System C4>>\nRobDroneGo" as RDG
+
+activate CM
+
+CM -> RDG: Sends request to list elevators in building x
+activate RDG
+RDG -> RDG: Gets elevators for building x
+RDG --> CM: Shows list of elevators
+deactivate RDG
+
+
+@enduml

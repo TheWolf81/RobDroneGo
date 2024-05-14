@@ -1,0 +1,31 @@
+pipelines:
+  branches:
+    main:
+      - step: 
+          name: Clear npm cache and reinstall packages
+          script:
+            - npm cache clean --force
+            - rm -rf node_modules
+            - npm install
+      - step: 
+          name: Build and Test
+          script:
+            - cd $BITBUCKET_CLONE_DIR/GestãoDeFrota_Campus
+            - npm install
+            - npm run start
+            - npm run test
+      - step: 
+          name: Serve Output
+          script:
+            - cd $BITBUCKET_CLONE_DIR/dist/angular-basic
+            - npm install -g @angular/cli
+            - ng serve --open
+      - step: 
+          name: Deploy to test
+          deployment: test
+          script:
+            - pipe: microsoft/azure-static-web-apps-deploy:main
+              variables:
+                  APP_LOCATION: '$BITBUCKET_CLONE_DIR/GestãoDeFrota_Campus'
+                  OUTPUT_LOCATION: '$BITBUCKET_CLONE_DIR/dist/angular-basic'
+                  API_TOKEN: $dde2e47c74d6148310bf8826297c603a58168e43c2da8ba30f38d80f846ba78f4-a198e520-e6b4-4799-8a4d-7df3b205d40c010274671

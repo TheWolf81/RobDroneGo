@@ -1,0 +1,27 @@
+<div class="edit-elevator-container">
+    <h2>Edit an Elevator</h2>
+    <form (submit)="editElevator()">
+        <div class="form-group">
+            <!-- ElevatorId Input -->
+            <label for="building_id">Select Building:</label>
+            <select id="building_id" [(ngModel)]="building_id" name="building_id" (change)="onBuildingChange()" required>
+                <option *ngFor="let building of buildings" [value]="building.domain_id">{{ building.code }}</option>
+              </select>
+        </div>
+        <div class="form-group">
+            <!-- FloorIds Input -->
+            <label for="floorId">Select Floors:</label>
+            <select id="floorId" name="floorId" (change)="onFloorChange($event)" required>
+              <option *ngFor="let floor of floors" [value]="floor.DomainId">{{ floor.name }}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <!-- Description Input -->
+            <label for="description">Description:</label>
+            <input type="text" id="description" placeholder="*max 255 characters" [(ngModel)]="description" name="description">
+        </div>
+        <button type="submit">Edit Elevator</button>
+        <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+        <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+  </form>
+</div>

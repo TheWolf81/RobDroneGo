@@ -1,0 +1,103 @@
+/* Estilizando o contêiner principal da lista */
+.list-building-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+    justify-content: center;
+}
+
+/* Estilizando o quadrado representando um edifício */
+.building-square {
+    background-color: #494949;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    width: 250px;
+    height: 250px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Estilizando o código do edifício */
+.building-code {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    margin: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* Escondendo o código ao fazer hover */
+.building-square:hover .building-code {
+    opacity: 0;
+}
+
+/* Exibindo detalhes ao fazer hover */
+.building-square:hover {
+    background-color: rgba(255, 255, 255, 0)e6e;
+}
+
+
+
+.building-square:hover .building-details {
+    display: flex;
+}
+
+.h3 {
+    margin: 0;
+    margin-bottom: 10px;
+    font: fallback;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #5a320d;
+}
+
+/* Estilizando os detalhes do edifício */
+.building-details {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0); /* Atualizado para melhor visibilidade */
+    border-radius: 10px;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start; /* Alinhado à esquerda */
+    text-align: left;
+}
+
+/* Estilizando os elementos de descrição */
+.building-details .description,
+.building-details .max-length,
+.building-details .max-width {
+    margin-bottom: 15px; /* Espaçamento entre os elementos */
+    font: fallback;
+    border-radius: 10px;
+}
+
+/* Estilizando o texto dos elementos */
+.building-details h3 {
+    margin: 0;
+    font-style: italic;
+        font-weight: 600;
+    font-size: 1.3rem; /* Tamanho do texto */
+    color: #ffffff; /* Cor do texto */
+    border-radius: 10px;
+    background-color: #5a320d00;
+}

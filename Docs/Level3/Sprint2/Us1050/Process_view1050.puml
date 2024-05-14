@@ -1,0 +1,28 @@
+@startuml
+participant "Campus Manager" as user
+participant "Routing" as R
+participant "CreateBuildingComponent" as COMP
+participant "BuildingService" as SERV
+participant "BackEnd" as BE
+activate user
+user -> R: Selects the builiding menu on the web app
+activate R
+R --> user: Shows the building menu
+deactivate R
+user -> R: Selects the create building option
+activate R
+R --> user: Shows the create building component (html page)
+deactivate R
+user -> COMP: Fills the form with the building data
+activate COMP
+COMP -> SERV: Sends the building data
+activate SERV
+SERV -> BE: Sends the building data
+activate BE
+BE -> BE: Validates the data and creates the building
+BE --> SERV: Returns the building data and success / failure code
+deactivate BE
+SERV --> COMP: Returns the building data and success / failure code
+deactivate SERV
+COMP --> user: Shows the building data and success / failure code
+deactivate COMP

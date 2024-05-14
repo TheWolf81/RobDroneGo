@@ -1,0 +1,63 @@
+@startuml
+
+
+participant "<<System C4>>\nRobDroneGo" as RDG
+participant "Routing" as ROUT
+participant "Controller" as CTR
+participant "Aplication Service" as AppServ
+participant "Repository" as REPO 
+participant "Database" as DB
+participant "Robot" as ROBOT
+participant "DTO" as DTO
+participant "Mapper" as Mapper
+
+--> RDG : Post "/robot/create"
+activate RDG
+RDG -> ROUT : CreateRobot
+activate ROUT
+ROUT -> CTR : CreateRobot
+activate CTR
+CTR -> DTO : CreatRobot as DTO
+activate DTO
+DTO -> Mapper : CreateRobot as DTO
+activate Mapper
+Mapper -> ROBOT : CreateRobot as DTO
+activate ROBOT
+ROBOT --> Mapper : CreatedRobot as DTO
+deactivate ROBOT
+Mapper --> DTO : CreatedRobot as DTO
+deactivate Mapper
+DTO --> CTR : CreatedRobot as DTO
+deactivate DTO
+CTR -> AppServ : CreateRobot(RobotDTO)
+activate AppServ
+AppServ -> Robot : Create(RobotDTO)
+activate Robot
+Robot --> AppServ : Create(RobotDTO0)
+deactivate Robot
+AppServ -> REPO :Save()
+activate REPO
+REPO -> DB : Save()
+activate DB
+DB --> REPO : Saved()
+deactivate DB
+REPO --> AppServ : Saved()
+deactivate REPO
+AppServ -> DTO : Robot to DTO
+activate Mapper
+Mapper -> DTO : Robot to DTO
+activate DTO
+DTO --> Mapper : Robot to DTO
+deactivate DTO
+Mapper --> AppServ : Robot to DTO
+deactivate Mapper
+AppServ --> CTR : CreatedRobot as DTO
+deactivate AppServ
+CTR --> ROUT : CreatedRobot return DTO
+deactivate CTR
+ROUT --> RDG : CreatedRobot return DTO
+deactivate ROUT
+deactivate RDG
+
+
+@enduml

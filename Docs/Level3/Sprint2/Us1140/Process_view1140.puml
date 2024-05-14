@@ -1,0 +1,41 @@
+@startuml
+participant "Campus Manager" as user
+participant "Routing" as R
+participant "ListElevatorByBuildingComponent" as COMP
+participant "ElevatorService" as SERVE
+participant "BuildingService" as SERVB
+participant "FloorService" as SERVF
+participant "BackEnd" as BE
+activate user
+user -> R: Selects the elevator menu on the web app
+activate R
+R --> user: Shows the elevator menu
+deactivate R
+user -> R: Selects the list elevator by building option
+activate R
+R --> user: Routes to the list elevator component
+R -> COMP: Requests the list elevator component
+deactivate R
+activate COMP
+COMP -> SERVB: Requests the list of buildings
+activate SERVB
+SERVB -> BE: Requests the list of buildings
+activate BE
+BE --> SERVB: Sends the list of buildings
+deactivate BE
+SERVB --> COMP: Sends the list of buildings
+deactivate SERVB
+COMP --> user: Shows the list elevator component (html page) with the list of buildings for the user to select
+deactivate COMP
+user -> COMP: Selects the building
+activate COMP
+COMP -> SERVE: Requests the list of elevators
+activate SERVE
+SERVE -> BE: Requests the list of elevators
+activate BE
+BE --> SERVE: Sends the list of elevators
+deactivate BE
+SERVE --> COMP: Sends the list of elevators
+deactivate SERVE
+COMP --> user: Shows the existing elevators for the selected building
+deactivate COMP

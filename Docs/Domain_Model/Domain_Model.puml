@@ -1,0 +1,92 @@
+@startuml
+skinparam classAttributeIconSize 1
+hide empty members
+hide circle
+left to right direction
+
+class User{
+}
+note left of User
+  A user is a person who uses the application.
+  He can be a:
+  * System Administrator
+  * Campus Manager
+  * Fleet Manager
+  * Task Manager
+  * Client
+end note
+
+class Robot{
+}
+
+class RobotType{
+}
+class Task{
+}
+
+class TaskType{
+}
+note right of TaskType
+  A task type is a type of task.
+  It can be a:
+  * Object delivery
+  * Cleaning
+  * Vigilance
+  * Image Acquisition
+end note
+
+class Building{
+}
+
+class Floor{
+}
+
+class Elevator{
+}
+
+class Passageway{
+}
+
+class Door{
+}
+
+class Classroom{
+}
+
+class Bureau{
+}
+
+class Campus{
+}
+
+class Sensors{
+}
+
+
+
+"User" "1" --> "*" "User" : manages authorizations (as System Administrator)
+"User" "1" --> "*" "Robot" : manages information (as Fleet Manager)
+"User" "1" --> "*" "TaskType" : manages (as Fleet Manager)
+"User" "1" --> "1" "Campus" : manages (as Campus Manager)
+"User" "1" --> "*" "Task" : manages (as Task Manager)
+"User" "1" --> "1..*" "Task" : requests (as Client)
+
+"Robot" "1" --> "1" "RobotType" : has a
+
+"Robot" "1" --> "*" "Task" : performs
+"Robot" "1" --> "*" "Sensors" : uses
+"Robot" "1" --> "1" "Campus" : moves within
+
+"Campus" "1" --> "*" "Building" : contains
+"Building" "1" --> "1..*" "Floor" : contains
+"Building" "1" --> "0..1" "Elevator" : contains
+
+"Floor" "1" --> "1..*" "Passageway" : contains
+"Floor" "1" --> "1..*" "Door" : contains
+"Floor" "1" --> "1..*" "Classroom" : contains
+"Floor" "1" --> "1..*" "Bureau" : contains
+
+"Task" "1" --> "1" "TaskType" : has a
+
+
+@enduml

@@ -1,0 +1,25 @@
+<div class="list-buildings-with-min-and-max-floors-container">
+    <h2>List of Buildings with Max and Min Floors</h2>
+
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+  
+
+      <label for="min">Min Floors:</label>
+      <input type="number" id="min" name="min" [(ngModel)]="min" required min="0">
+  
+      <label for="max">Max Floors:</label>
+      <input type="number" id="max" name="max" [(ngModel)]="max" required min="0">
+  
+      <button (click)="listBuildingsWithMaxAndMinFloors()">List Buildings</button>
+  
+      <div class="slide" *ngIf="data">
+        <div class="building-slide" *ngFor="let building of data">
+            <div class="building-square">
+                <h3> Code: {{ building.code }}</h3>
+                <p> Description: {{ building.description }}</p>
+                <p> max_length: {{ building.max_length }}</p>
+                <p> max_width: {{ building.max_width }}</p>
+            </div>
+        </div>
+  </div>
+  

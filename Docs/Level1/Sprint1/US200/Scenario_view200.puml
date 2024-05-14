@@ -1,0 +1,11 @@
+@startuml
+
+left to right direction
+
+(Edit information of a Floor) as (x)
+
+:Campus Manager: as CM
+
+CM -- (x)
+
+@enduml

@@ -1,0 +1,15 @@
+@startuml
+
+actor "Campus Manager" as CM
+participant "<<System C4>>\nRobDroneGo" as RDG
+
+activate CM
+
+CM -> RDG: Sends request to list buildings with max and min floors
+activate RDG
+RDG -> RDG: Gets buildings with max and min floors
+RDG --> CM: Shows list of buildings
+deactivate RDG
+
+
+@enduml

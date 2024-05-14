@@ -1,0 +1,11 @@
+@startuml
+
+left to right direction
+
+(Create a new Floor in a Building) as (x)
+
+:Campus Manager: as CM
+
+CM -- (x)
+
+@enduml

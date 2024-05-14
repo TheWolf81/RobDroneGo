@@ -1,0 +1,41 @@
+body h1{
+    text-align: center;
+    font-size: 50px;
+    font-weight: 700;
+    padding: 20px;
+}
+
+body h2{
+    text-align: left;
+    font-size: 30px;
+    font-weight: 700;
+    padding: 10px;
+}
+
+body p{
+    font-size: 20px;
+    font-weight: 500;
+    padding: 10px;
+}
+
+footer{
+    text-align: left;
+    font-weight: 700;
+    font-size: 20px;
+}
+footer h1{
+    font-size: 25px;
+    font-weight: 700;
+    padding: 10px;
+}
+footer li{
+    list-style-type: none;
+    font-size: 18px;
+    padding: 5px;
+
+}
+footer p{
+    font-size: 15px;
+    text-align : center;
+    padding: 5px;
+}

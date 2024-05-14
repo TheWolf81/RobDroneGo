@@ -1,0 +1,16 @@
+'https://plantuml.com/sequence-diagram
+' As a campus manager, I want to edit the building
+
+@startuml US160_EditBuilding_1
+actor "Campus Manager" as CM
+participant "<<System C4>>\nRobDroneGo" as RDG
+
+activate CM
+
+CM -> RDG: Sends data to edit building
+activate RDG
+RDG -> RDG: Edits building
+RDG -> CM: Informs about the result
+deactivate RDG
+
+@enduml

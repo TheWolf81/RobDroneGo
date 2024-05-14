@@ -1,0 +1,74 @@
+@startuml US 1070 - Editar Edificio
+actor "Campus Manager" as user
+participant "FrontEnd" as FE
+participant "EditBuildingHTML" as HTML
+participant "EditBuildingComponent" as COMP
+participant "BuildingService" as SERV
+participant "BuildingRoute" as ROUTE
+participant "BuildingRoute" as ROUTE2
+participant "BackEnd" as BE
+
+activate user
+user -> FE: asks to edit a Building
+activate FE
+FE -> HTML: /building/edit
+activate HTML
+HTML -> COMP: ngOnInit()
+activate COMP
+COMP -> SERV: listBuildings()
+activate SERV
+SERV -> ROUTE2: GET /building/getAll
+activate ROUTE2
+ROUTE2 -> BE: getAllBuildings()
+activate BE
+BE --> ROUTE2: sends response with BuildingDTO's and http code 200
+deactivate BE
+ROUTE2 --> SERV: returns response with BuildingDTO's
+deactivate ROUTE2
+SERV --> COMP: returns response with BuildingDTO's
+deactivate SERV
+COMP --> HTML: returns response with BuildingDTO's
+deactivate COMP
+HTML --> FE: returns response with BuildingDTO's
+deactivate HTML
+FE --> user: shows list of building codes and asks to choose one
+deactivate FE
+user -> FE: chooses a building code
+activate FE
+FE -> HTML: inputs data
+activate HTML
+HTML -> COMP: onBuildingChange()
+activate COMP
+COMP -> COMP: loadBuildingData
+
+COMP --> HTML: updates current building data
+deactivate COMP
+HTML --> FE: updates current building data
+deactivate HTML
+FE --> user: shows current building data
+deactivate FE
+user -> FE: updates the parameters to edit the Building
+activate FE
+FE -> HTML: input data
+activate HTML
+HTML -> COMP: editBuilding()
+activate COMP
+COMP -> SERV: editBuilding()
+activate SERV
+SERV -> ROUTE: PUT /edit/:domainId/(jsonBody)
+activate ROUTE
+ROUTE -> BE: editBuilding()
+activate BE
+BE --> ROUTE: sends response with BuildingDTO and http code 200
+deactivate BE
+ROUTE --> SERV: returns response with BuildingDTO and http code 200
+deactivate ROUTE
+SERV --> COMP: returns response with BuildingDTO
+deactivate SERV
+COMP --> HTML: returns response with BuildingDTO
+deactivate COMP
+HTML --> FE: returns response with BuildingDTO
+deactivate HTML
+FE --> user: shows success message
+
+@enduml

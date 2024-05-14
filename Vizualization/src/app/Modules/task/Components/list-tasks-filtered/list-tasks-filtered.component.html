@@ -1,0 +1,55 @@
+<div class="task-container">
+    <h2>List tasks with a filter</h2>
+  
+    <form>
+      <!--BulidingId1 Input -->
+     
+      <div class="form-group">
+        <label for="status">Select Status:</label>
+        <select id="status" [(ngModel)]="status" name="status" required>
+          <option value="requested">Requested</option>
+          <option value="approved">Approved</option>
+          <option value="denied">Denied</option>
+          <option value="planned">Planned</option>
+        </select>
+      </div>
+     
+      <div class="form-group">
+        <label for="deviceType">Select Device Type :</label>
+        <select id="deviceType" [(ngModel)]="deviceType" name="deviceType" required>
+          <option *ngFor="let type of deviceTypes" [value]="type.model">{{ type.model }}</option>
+        </select>
+      </div>
+
+      <label for="userEmail">User Email:</label>
+      <input type="text" id="userEmail" name="userEmail" required [(ngModel)]="userEmail">
+
+  
+      <!-- Cool Buttons-->
+      <ul class="cool_buttons">
+        <li><button type="button" (click)="tasksByStatus()">Filter Status</button></li>
+        <li><button type="button" (click)="tasksByDeviceType()">Filter Device</button></li>
+        <li><button type="button" (click)="tasksByUserEmail()">Filter User</button></li>
+        </ul>
+  
+      <!-- Error Message Display -->
+      <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+    </form>
+  
+    <!-- Data Display -->
+    <div class="slide">
+      <div class="list-slide" *ngFor="let list of tasks">
+          <div class="list-square">
+              <h3>{{title}} Task</h3>
+              <p><b>taskType:</b> {{list.taskType}}</p>
+              <p><b>Confirmation Code:</b> {{list.code}}</p>
+              <p><b>Status:</b> {{ list.status }}</p>
+              <p><b>User Email:</b> {{list.email}}</p>
+              <p><b>Device:</b> {{ list.deviceType }}</p>
+              <p><b>Description:</b> {{ list.description }}</p>
+              <p><b>Origin:</b> {{ list.location1 }}</p>
+              <p><b>Destination:</b> {{ list.location2 }}</p>
+      </div>
+    </div> 
+  </div>
+  

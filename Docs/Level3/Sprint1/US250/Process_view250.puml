@@ -1,0 +1,63 @@
+@startuml
+
+
+participant "<<System C4>>\nRobDroneGo" as RDG
+participant "Routing" as ROUT
+participant "Controller" as CTR
+participant "Aplication Service" as AppServ
+participant "Repository" as REPO 
+participant "Database" as DB
+participant "Hallway Connection" as DOMAIN
+participant "DTO" as DTO
+participant "Mapper" as Mapper
+
+--> RDG : Post "/DOMAIN/edit"
+activate RDG
+RDG -> ROUT : editHallwayConnection
+activate ROUT
+ROUT -> CTR : editHallwayConnection
+activate CTR
+CTR -> DTO : createHallwayConnection as DTO
+activate DTO
+DTO -> Mapper : createHallwayConnection as DTO
+activate Mapper
+Mapper -> DOMAIN : createHallwayConnection as DTO
+activate DOMAIN
+DOMAIN --> Mapper : createHallwayConnection as DTO
+deactivate DOMAIN
+Mapper --> DTO : createHallwayConnection as DTO
+deactivate Mapper
+DTO --> CTR : createHallwayConnection as DTO
+deactivate DTO
+CTR -> AppServ : editHallwayConnection(DOMAINDTO)
+activate AppServ
+AppServ -> DOMAIN : Create(DOMAINDTO)
+activate DOMAIN
+DOMAIN --> AppServ : Create(DOMAINDTO)
+deactivate DOMAIN
+AppServ -> REPO :Save()
+activate REPO
+REPO -> DB : Save()
+activate DB
+DB --> REPO : Saved()
+deactivate DB
+REPO --> AppServ : Saved()
+deactivate REPO
+AppServ -> DTO : DOMAIN to DTO
+activate Mapper
+Mapper -> DTO : DOMAIN to DTO
+activate DTO
+DTO --> Mapper : DOMAIN to DTO
+deactivate DTO
+Mapper --> AppServ : DOMAIN to DTO
+deactivate Mapper
+AppServ --> CTR : editHallwayConnection as DTO
+deactivate AppServ
+CTR --> ROUT : editHallwayConnection return DTO
+deactivate CTR
+ROUT --> RDG : editHallwayConnection return DTO
+deactivate ROUT
+deactivate RDG
+
+
+@enduml

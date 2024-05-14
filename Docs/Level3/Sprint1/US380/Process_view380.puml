@@ -1,0 +1,40 @@
+@startuml
+participant "<<Container C4>>\nFleet+Campus Management" as RDG
+participant "Routing" as ROUT
+participant "Controller" as CTR
+participant "Service" as Serv
+participant "Repository" as REPO 
+participant "Mapper" as Mapper
+participant "Database" as DB
+
+--> RDG : Get request: "/api/robot/all"
+activate RDG
+RDG -> ROUT : Route to "/api/robot/all"
+activate ROUT
+ROUT -> CTR : Call "getAllRobots" method
+activate CTR
+CTR -> Serv : Call "getAllRobots" method
+activate Serv
+Serv -> REPO : Find Robot record(s)
+activate REPO
+REPO -> DB : Contact the database
+activate DB
+DB --> REPO : Return the Robot record(s) (if found)
+deactivate DB
+REPO -> Mapper : Map the Robot record(s) to RobotDTO
+activate Mapper
+Mapper -> REPO : Return the mapped Robot(s)
+deactivate Mapper
+REPO --> Serv : Return the RobotDTO(s)
+deactivate REPO
+Serv --> CTR : Return the RobotDTO(s) 
+deactivate Serv
+CTR --> ROUT : Return the RobotDTO(s) 
+deactivate CTR
+ROUT --> RDG : Return the RobotDTO(s) (JSON)
+deactivate ROUT
+<-- RDG: Return response: RobotDTO(s) in JSON format
+deactivate RDG
+
+@enduml
+

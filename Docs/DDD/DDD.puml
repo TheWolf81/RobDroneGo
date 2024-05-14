@@ -1,0 +1,95 @@
+@startuml DM
+skinparam classAttributeIconSize 0
+hide empty members
+hide circle
+left to right direction
+
+package User_<<aggregate>>{
+class "<<Root>>\nUser"{
+    - firstName
+    - lastName
+}
+class "<<Value Object>>\nUserEmail"{
+    - value
+}
+class "<<Value Object>>\nUserPassword"{
+    - value
+}
+enum "<<Value Object>>\nRole"{
+    - name
+}
+note right
+    Role can be either:
+    - Admin (manages Users)
+    - Fleet Manager (manages Devices info)
+    - Campus Manager (manages Campus info)
+    - Task Manager (attributes tasks to Devices)
+    - User (Requests tasks)
+end note
+
+"<<Root>>\nUser" "1" --> "1" "<<Value Object>>\nUserPassword"
+"<<Root>>\nUser" "1" --> "1" "<<Value Object>>\nUserEmail"
+"<<Root>>\nUser" "1" --> "1" "<<Value Object>>\nRole"
+}
+
+package Device_<<aggregate>>{
+class "<<Root>>\nDevice"{
+
+}
+class "<<Entity>>\nRobIsep"{
+
+}
+class "<<Entity>>\nDroneIsep"{
+
+}
+class "<<Entity>>\nTaskTypesEnabled"{
+
+}
+
+
+
+
+"<<Root>>\nDevice" "1" --> "1..*" "<<Entity>>\nTaskTypesEnabled" : has
+"<<Root>>\nDevice" "1" <|-- "1" "<<Entity>>\nRobIsep" : is a 
+"<<Root>>\nDevice" "1" <|-- "1" "<<Entity>>\nDroneIsep" : is a
+
+}
+
+package Task_<<aggregate>>{
+class "<<Root>>\nTask"{
+
+}
+
+class "<<Entity>>\nTaskType"{
+
+}
+"<<Root>>\nTask" "1" --> "1" "<<Entity>>\nTaskType": has a
+}
+
+package "Building_<<aggregate>>"{
+class "<<Root>>\nBuilding"{
+
+}
+class "<<Entity>>\nFloor"{
+    - Map (matrix)
+}
+"<<Root>>\nBuilding" "1" --> "1..*" "<<Entity>>\nFloor" : has
+}
+
+
+class "<<Service>>\nTaskRequest"{
+}
+class "<<Service>>\nRouting"{
+}
+
+"<<Root>>\nTask" "1" <-- "1" "<<Root>>\nDevice" : performs
+"<<Root>>\nUser" "1..*" --> "*" "<<Service>>\nTaskRequest" : requests (as User)
+"<<Service>>\nTaskRequest" "1" --> "1" "<<Root>>\nTask" : creates (if approved)
+"<<Root>>\nUser" "1..*" --> "*" "<<Root>>\nDevice" : configures (as Fleet Manager)
+"<<Root>>\nUser" "1" --> "1" "<<Root>>\nUser" : manages authorizations (as Admin)
+"<<Root>>\nUser" "1" --> "1" "<<Root>>\nTask" : manages tasks (as Task Manager)
+"<<Root>>\nUser" "1" --> "1" "<<Root>>\nBuilding" : manages buildings (as Campus Manager)
+"<<Root>>\nDevice" "*" --> "1" "<<Root>>\nRouting" : Uses 
+"<<Root>>\nRouting" "1" --> "1..*" "<<Root>>\nBuilding" : navigates through
+"<<Root>>\nRouting" "1" --> "1" "<<Root>>\nTask" : relates to
+@enduml

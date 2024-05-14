@@ -1,0 +1,58 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+  integrity="sha512-">
+
+
+<div class="create-hallway-connection-container">
+  <h2>Create a New Hallway Connection</h2>
+
+  <form (submit)="createHallwayConnection()">
+    <!--FloorId1 Input -->
+
+    <div class="form-group">
+      <label for="FloorId1">Select Floor:</label>
+      <select id="FloorId1" [(ngModel)]="FloorId1" name="FloorId1" required>
+        <option *ngFor="let floor of floors" [value]="floor.DomainId">{{ floor.name }}</option>
+      </select>
+    </div>
+
+    <!--FloorId2 Input -->
+    <div class="form-group">
+      <label for="FloorId2">Select Floor 2:</label>
+      <select id="FloorId2" [(ngModel)]="FloorId2" name="FloorId2" required>
+        <option *ngFor="let floor of floors" [value]="floor.DomainId">{{ floor.name }}</option>
+      </select>
+    </div>
+
+     <!-- x1 Input -->
+     <div class="form-group">
+      <label for="x1">x1:</label>
+      <input type="text" id="x1" [(ngModel)]="x1" name="x1" required>
+    </div>
+
+    <!-- y1 Input -->
+    <div class="form-group">
+      <label for="y1">y1:</label>
+      <input type="text" id="y1" [(ngModel)]="y1" name="y1" required>
+    </div>
+
+     <!-- x2 Input -->
+     <div class="form-group">
+      <label for="x2">x2:</label>
+      <input type="text" id="x2" [(ngModel)]="x2" name="x2" required>
+    </div>
+
+    <!-- y2 Input -->
+    <div class="form-group">
+      <label for="y2">y2:</label>
+      <input type="text" id="y2" [(ngModel)]="y2" name="y2" required>
+    </div>
+
+
+    
+    <!-- Button to Create Robot -->
+    <button type="submit">Create Hallway Connection</button>
+
+    <!-- Error Message Display -->
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+  </form>
+</div>

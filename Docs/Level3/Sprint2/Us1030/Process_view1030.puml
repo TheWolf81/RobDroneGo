@@ -1,0 +1,26 @@
+@startuml
+participant "Fleet Manager" as user
+participant "Routing" as R
+participant "ListRobotsComponent" as COMP
+participant "RobotService" as SERVR
+participant "BackEnd" as BE
+activate user
+user -> R: Selects the Robot menu on the web app
+activate R
+R --> user: Shows the Robot menu
+deactivate R
+user -> R: Selects the consult all robots option
+activate R
+R --> user: Routes to the consult all robots component
+R -> COMP: Requests the consult all robots component
+deactivate R
+activate COMP
+COMP -> SERVR: Requests all robots
+activate SERVR
+SERVR -> BE: Requests all robots
+activate BE
+BE --> SERVR: Returns all robots
+deactivate BE
+SERVR --> COMP: Returns all robots
+deactivate SERVR
+COMP --> user: Shows all robot's information

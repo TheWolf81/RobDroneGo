@@ -1,0 +1,53 @@
+@startuml
+participant "<<Container C4>>\nFleet+Campus Management" as RDG
+participant "Routing" as ROUT
+participant "Controller" as CTR
+participant "Service" as SERV
+participant "Repository" as REPO 
+participant "Elevator" as DOMAIN
+participant "Mapper" as Mapper
+participant "Database" as DB
+participant "Floor" as FLOOR
+
+--> RDG : PATCH request "/api/floor/loadMap/:domainId"
+activate RDG
+RDG -> ROUT : Route to "/api/floor/loadMap/:domainId"
+activate ROUT
+ROUT -> CTR : Call "loadMap" method
+activate CTR
+CTR -> SERV: Call "loadMap" method (domainId as parameter, MapDTO as body)
+activate SERV
+SERV -> REPO: Find floor (using domainId)
+activate REPO
+REPO -> DB: Contact database
+activate DB
+DB --> REPO: Return floor
+deactivate DB
+REPO --> SERV: Return floor
+deactivate REPO
+SERV --> SERV: calls "updateFloorMap" method (floor, map)
+SERV -> REPO: Calls "save" method (updated floor as parameter)
+activate REPO
+REPO -> Mapper: Map floor to persistence data model
+activate Mapper
+Mapper --> REPO: Return mapped floor
+deactivate Mapper
+REPO -> DB: Save floor
+activate DB
+DB --> REPO: Return updated floor
+deactivate DB
+REPO --> SERV: Return updated floor
+deactivate REPO
+SERV --> CTR: Return updated floor
+deactivate SERV
+CTR --> ROUT: Return updated floor
+deactivate CTR
+ROUT --> RDG: Return updated floor(JSON)
+deactivate ROUT
+<<-- RDG: response: updated floor(JSON)
+deactivate RDG
+
+
+
+
+@enduml

@@ -1,0 +1,36 @@
+<!-- create-hallway-connection.component.html -->
+
+<div class="create-hallway-connection-container">
+  <h2>Edit a Hallway Connection</h2>
+
+  <form (submit)="editHallwayConnection()">
+    <!--FloorId1 Input -->
+    <div class="form-group">
+      <label for="FloorId1">Select Floor:</label>
+      <select id="FloorId1" [(ngModel)]="FloorId1" name="FloorId1" required>
+        <option *ngFor="let floor of floors" [value]="floor.DomainId">{{ floor.name }}</option>
+      </select>
+    </div>
+
+    <!-- FloorId2 Input -->
+    <div class="form-group">
+      <label for="FloorId2">Select Floor 2:</label>
+      <select id="FloorId2" [(ngModel)]="FloorId2" name="FloorId2" required>
+        <option *ngFor="let floor of floors" [value]="floor.DomainId">{{ floor.name }}</option>
+      </select>
+    </div>
+  
+    <div class="form-group">
+      <label for="DomainId">Select Connection :</label>
+      <select id="DomainId" [(ngModel)]="DomainId" name="DomainId" required>
+        <option *ngFor="let hallway of hallwayConnections" [value]="hallway.domainId">{{ hallway.FloorName1 }} - {{ hallway.FloorName2 }} </option>
+      </select>
+    </div>
+
+    <!-- Button to Create Robot -->
+    <button type="submit">Edit Hallway Connection</button>
+
+    <!-- Error Message Display -->
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+  </form>
+</div>

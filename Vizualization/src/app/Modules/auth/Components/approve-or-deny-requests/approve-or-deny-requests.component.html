@@ -1,0 +1,43 @@
+<div class="approve-or-deny-requests-container">
+    <h2>Approve/Deny Requests</h2>
+
+    <form (submit)="submit()">
+
+        <div class="form-group">
+            <label for="userEmail">Select User:</label>
+            <select id="userEmail" [(ngModel)]="userEmail" name="userEmail" required (change)="setUserDetails()">
+                <option *ngFor="let user of users" [value]="user.email">{{ user.email }}</option>
+              </select>
+        </div>
+
+        <div class="form-group">
+            <label for="newStatus">Select New Status:</label>
+            <select id="newStatus" [(ngModel)]="newStatus" name="newStatus" required>
+                <option value="Approved">Approved</option>
+                <option value="Denied">Denied</option>
+            </select>
+        </div>
+
+        <!-- Display User Information -->
+        <div *ngIf="selectedUser">
+            <h3>User Information</h3>
+            <p><strong>First Name:</strong> {{ selectedUser.firstName }}</p>
+            <p><strong>Last Name:</strong> {{ selectedUser.lastName }}</p>
+            <p><strong>Username:</strong> {{ selectedUser.username }}</p>
+            <p><strong>Email:</strong> {{ selectedUser.email }}</p>
+            <p><strong>Phone Number:</strong> {{ selectedUser.phoneNumber }}</p>
+            <p><strong>Nif:</strong> {{ selectedUser.nif }}</p>
+            <p><strong>Role:</strong> {{ selectedUser.role }}</p>
+            <!-- Add more user details as needed -->
+        </div>
+
+        <button type="submit">Submit</button>
+
+
+
+        <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+        <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+
+    </form>
+</div>

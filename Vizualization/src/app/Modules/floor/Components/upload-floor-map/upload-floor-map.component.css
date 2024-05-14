@@ -1,0 +1,46 @@
+.load-floor-map-container{
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group{
+    margin-bottom: 15px;
+}
+
+label{
+    display: inline-block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input, 
+textarea{
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+button{
+    background-color: #BDB76B;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover{
+    background-color: #8b4513;
+}
+
+.error-message{
+    color: red;
+    font-weight: bold;
+    margin-bottom: 15px;
+}

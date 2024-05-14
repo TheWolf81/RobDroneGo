@@ -1,0 +1,45 @@
+<div class="auth-container">
+    <h2>Request creation of a new account</h2>
+
+    <form (submit)="createAccount()">
+
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName" required [(ngModel)]="firstName">
+
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName" required [(ngModel)]="lastName">
+
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required [(ngModel)]= "username">
+        
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" placeholder="must contain a '@' and a '.'" required [(ngModel)]="email">
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" placeholder="1 uppercase, 1 lowercase, 1 digit/symbol and 8 chars min" required [(ngModel)]="password">
+
+        <label for="phoneNumber">Phone Number:</label>
+        <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="must follow portuguese number format" pattern="[0-9]+" required [(ngModel)]="phoneNumber">
+
+        <label for="nif">NIF:</label>
+        <input type="text" id="nif" name="nif" pattern="[0-9]+" placeholder="must follow portuguese number format" required [(ngModel)]="nif">
+
+        <label>All fields are mandatory</label>
+
+        <label style="font-size: smaller;">
+            I agree with the <a href="/privacyPolicyAndTermsOfUse">Privacy Policy and TermsOfUse:</a>
+
+            <input type="checkbox" id="agree" name="agree" required [(ngModel)]="agree">
+        </label>
+
+        <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+        <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+
+        <button type="submit">Create Account</button>
+
+    </form>
+
+        <button *ngIf="!(auth.isAuthenticated$ | async)" (click)="createAccountAuth0()">LogIn with Auth0</button>
+        <button *ngIf="auth.user$ | async as user" class="auth-button" (click)="auth.logout({ logoutParams: { returnTo: document.location.origin } })">
+            LogOut Auth0 user: {{ user.given_name + ' ' + user.family_name }}
+        </button>

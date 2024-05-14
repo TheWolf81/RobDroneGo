@@ -1,0 +1,47 @@
+@startuml
+participant "<<Container C4>>\nFleet Management" as RDG
+participant "Routing" as ROUT
+participant "Controller" as CTR
+participant "Service" as Serv
+participant "Repository" as REPO
+participant "TypeOfRobot" as DOMAIN
+participant "Mapper" as Mapper
+participant "Database" as DB
+--> RDG : Post request: "/api/typeOfRobot/create"
+activate RDG
+RDG -> ROUT : Route to "/api/typeOfRobot/create"
+activate ROUT
+ROUT -> CTR : Call "createTypeOfRobot" method
+activate CTR
+CTR -> Serv : Call "createTypeOfRobot" method\n(Using request body as DTO)
+activate Serv
+Serv -> DOMAIN : Create a new TypeOfRobot
+activate DOMAIN
+note right of Serv
+    Does the necessary parameter validation
+end note
+DOMAIN -> Serv : Return the created TypeOfRobot
+deactivate DOMAIN
+Serv -> REPO : Call "save" method\n(Using the created TypeOfRobot)
+activate REPO
+REPO -> Mapper : Map the TypeOfRobot to persistence data model
+activate Mapper
+Mapper -> REPO : Return the mapped TypeOfRobot
+deactivate Mapper
+REPO -> DB : Save the TypeOfRobot
+activate DB
+DB --> REPO : Return the saved TypeOfRobot
+deactivate DB
+REPO --> Serv : Return the saved TypeOfRobot
+deactivate REPO
+Serv --> CTR : Return the saved TypeOfRobot
+deactivate Serv
+CTR --> ROUT : Return the saved TypeOfRobot
+deactivate CTR
+ROUT --> RDG : Return the saved TypeOfRobot (JSON)
+deactivate ROUT
+<-- RDG: Return response: saved TypeOfRobot in JSON format
+deactivate RDG
+
+@enduml
+

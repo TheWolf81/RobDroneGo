@@ -1,0 +1,43 @@
+@startuml
+participant "<<Container C4>>\nFleet+Campus Management" as RDG
+participant "Routing" as ROUT
+participant "Controller" as CTR
+participant "Service" as SERV
+participant "Repository" as REPO 
+participant "Elevator" as DOMAIN
+participant "Mapper" as Mapper
+participant "Database" as DB
+
+--> RDG : get request "/api/building/getAll"
+activate RDG
+RDG -> ROUT : Route to "api/building/edit/getAll"
+activate ROUT
+ROUT -> CTR : Call "getAll" method
+activate CTR
+CTR -> SERV: Call "getAll" method
+activate SERV
+SERV -> REPO: Call "findAll" method
+activate REPO
+REPO -> DB: Contact database
+activate DB
+DB --> REPO: Returns all buildings
+deactivate DB
+REPO -> Mapper: Maps all buildings
+activate Mapper
+Mapper --> REPO: Returns mapped buildings
+deactivate Mapper
+REPO --> SERV: Returns all buildings
+deactivate REPO
+SERV --> CTR: Returns all buildings  
+deactivate SERV
+CTR --> ROUT: Returns all buildings
+deactivate CTR
+ROUT --> RDG: Returns all buildings
+deactivate ROUT
+<<-- RDG: response: all buildings(JSON)
+deactivate RDG
+
+
+
+
+@enduml

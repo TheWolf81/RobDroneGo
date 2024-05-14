@@ -1,0 +1,11 @@
+@startuml
+
+left to right direction
+
+(Create new Hallway Connection) as (x)
+
+:Fleet Manager: as CM
+
+CM -- (x)
+
+@enduml

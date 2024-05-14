@@ -1,0 +1,61 @@
+@startuml
+
+left to right direction
+actor "Task manager" as taskmanager
+actor "Client" as client
+actor "System Admin" as systemadmin
+actor "System Architect" as systemarchitect
+actor "User" as user
+actor "Other" as other
+"US 460\nRequest a Task" as (usecase1)
+"US 470\nAprove/Deny a Task" as (usecase2)
+"US 480\nConsult Task Requests" as (usecase3)
+"US 490\nConsult Task by status/ device/ user" as (usecase4)
+"US 500\nObtain Task Sequence" as (usecase5)
+"US 10\nCreate a User" as (usecase6)
+"US 20\nRegister as Client" as (usecase7)
+"US 80\nAprove/Deny a User Registry" as (usecase8)
+"US 100\nRectify a Client Registry" as (usecase9)
+"US 110\nConsult Client Registry" as (usecase10)
+"US 120\nCancel a Client accont, deleting my data" as (usecase11)
+"US 1300\nAdjust Menu according to User" as (usecase12)
+"US 1310\nAll backend services are authenticated" as (usecase13)
+"US 1320\nAll backend services are authorized, validating the user role" as (usecase14)
+"US 750\nUsage of an IAM module to manage identities and permissions" as (usecase15)
+"US 1410\nA plan of task sequence of execution is created by generating\nall and chosing the leat costly" as (usecase16)
+"US 1420\nA complexity study of US1410's solution and its limits" as (usecase17)
+"US 1430\nA plan of task sequence of execution is created by\nusing a genetic algorithm" as (usecase18)
+"US 1440\nA study of the state-f the art of generation of\ntrajectories for robots" as (usecase19)
+"US 607\nThe robot in the 3D model transitions between\nfloors automatically when arriving at a hallway connection" as (usecase20)
+"US 608\nThe robot in the 3D model transitions between\nfloors when arriving at an elevator, with the user\nbeing able to chose which floor he will go to" as (usecase21)
+"US 609\nThe robot in the 3D model can travel automatically,\ngiven a path by the planning module" as (usecase22)
+"US 610\nThe robot in the 3D model when tavelling automatically\nhas visual feedback when going through hallway connections" as (usecase23)
+"US 611\nThe robot in the 3D model when travelling automatically\nhas visual feedback when going through elevators" as (usecase24)
+
+taskmanager --> usecase1
+taskmanager --> usecase2
+taskmanager --> usecase3
+taskmanager --> usecase4
+taskmanager --> usecase5
+systemadmin --> usecase6
+client --> usecase7
+systemadmin --> usecase8
+client --> usecase9
+client --> usecase10
+client --> usecase11
+user --> usecase12
+systemarchitect --> usecase13
+systemarchitect --> usecase14
+systemarchitect --> usecase15
+other --> usecase16
+other --> usecase17
+other --> usecase18
+other --> usecase19
+other --> usecase20
+other --> usecase21
+other --> usecase22
+other --> usecase23
+other --> usecase24
+
+
+@enduml

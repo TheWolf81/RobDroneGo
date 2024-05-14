@@ -1,0 +1,47 @@
+@startuml
+
+actor Postman as p
+participant Controller as c
+participant Service as s
+participant Authentication_Module as am
+participant Repository as r
+participant Context as ctx
+
+activate p
+p -> c : "get" http request with token to \n->/api/Task/GetByStatus/{status}\n->/api/Task/GetByTypeOfDevice/{typeOfDevice}\n->/api/Task/GetByEmail/{email}
+activate c
+c -> s : verify token's role
+activate s
+s -> am : sends token to authentication module
+activate am
+am -> am : gets user from token
+note right : this process is better described in package "MIDDLEWARE_AND_TOKEN_LOGIC"
+am --> s : returns user data
+deactivate am
+s -> s : checks if user has role "TaskManager"
+alt user has role "TaskManager"
+s -> r : get tasks with status {status} or typeOfDevice {typeOfDevice} or email {email}
+activate r
+r -> ctx : query database for tasks with given filter
+activate ctx
+ctx --> r : returns tasks
+deactivate ctx
+r --> s : returns tasks
+deactivate r
+s --> c : returns tasks
+deactivate s
+c --> p : returns tasks
+deactivate c
+
+else user has no role "TaskManager"
+activate s
+s --> c : returns error "Unauthorized"
+deactivate s
+activate c
+c --> p : returns error "Unauthorized"
+deactivate c
+end
+deactivate p
+
+
+@enduml

@@ -1,0 +1,101 @@
+/* Estilizando o contêiner principal da lista */
+.task-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+    justify-content: center;
+}
+
+/* Estilizando o quadrado representando um edifício */
+.task-square {
+    background-color: #494949;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    width: 375px;
+    height: 250px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Estilizando o código do edifício */
+.task-code {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    margin: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* Escondendo o código ao fazer hover */
+.task-square:hover .task-code {
+    opacity: 0;
+}
+
+/* Exibindo detalhes ao fazer hover */
+.task-square:hover {
+    background-color: rgba(255, 255, 255, 0)e6e;
+}
+
+
+
+.task-square:hover .task-details {
+    display: flex;
+}
+
+.h3 {
+    margin: 0;
+    margin-bottom: 10px;
+    font: fallback;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #5a320d;
+}
+
+/* Estilizando os detalhes do edifício */
+.task-details {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0); /* Atualizado para melhor visibilidade */
+    border-radius: 10px;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start; /* Alinhado à esquerda */
+    text-align: left;
+}
+
+/* Estilizando os elementos de descrição */
+.detail {
+    margin-bottom: 10px; /* Espaçamento entre os elementos */
+    font: fallback;
+    border-radius: 10px;
+}
+
+/* Estilizando o texto dos elementos */
+.task-details h3 {
+    margin: 0;
+    font-style: italic;
+        font-weight: 600;
+    font-size: 1.3rem; /* Tamanho do texto */
+    color: #ffffff; /* Cor do texto */
+    border-radius: 10px;
+    background-color: #5a320d00;
+}

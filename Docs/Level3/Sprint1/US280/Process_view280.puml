@@ -1,0 +1,61 @@
+@startuml
+participant "<<Container C4>>\nFleet+Campus Management" as RDG
+participant "Routing" as ROUT
+participant "Controller" as CTR
+participant "Service" as Serv
+participant "Repository" as REPO 
+participant "Elevator" as DOMAIN
+participant "Mapper" as Mapper
+participant "Database" as DB
+--> RDG : Patch request: "/api/elevator/edit/:domainId"
+activate RDG
+RDG -> ROUT : Route to "/api/elevator/edit/:domainId"
+activate ROUT
+ROUT -> CTR : Call "editElevator" method
+activate CTR
+CTR -> Serv : Call "editElevator" method\n(Using domainId as parameter, request body as DTO)
+activate Serv
+Serv -> REPO : Find Elevator record\n(Using domainId as parameter)
+activate REPO
+REPO -> DB : Contact the database
+activate DB
+DB --> REPO : Return the Elevator record (if found)
+deactivate DB
+REPO -> Mapper : Map the Elevator record to Elevator domain model
+activate Mapper
+Mapper -> REPO : Return the mapped Elevator
+deactivate Mapper
+REPO --> Serv : Return the Elevator
+deactivate REPO
+Serv --> REPO : Verify the new floors exist and are in the same building
+activate REPO
+REPO -> DB : Contact the database
+activate DB
+DB --> REPO : Return confirmation / error
+deactivate DB
+REPO --> Serv : Return confirmation (if error, end the process)
+deactivate REPO
+Serv --> Serv : Update the Elevator with the request body information
+Serv -> REPO : Call "save" method\n(Using the updated Elevator)
+activate REPO
+REPO -> Mapper : Map the Elevator to persistence data model
+activate Mapper
+Mapper -> REPO : Return the mapped Elevator
+deactivate Mapper
+REPO -> DB : Save the Elevator (updated)
+activate DB
+DB --> REPO : Return the saved Elevator
+deactivate DB
+REPO --> Serv : Return the saved Elevator
+deactivate REPO
+Serv --> CTR : Return the saved Elevator
+deactivate Serv
+CTR --> ROUT : Return the saved Elevator
+deactivate CTR
+ROUT --> RDG : Return the saved Elevator (JSON)
+deactivate ROUT
+<-- RDG: Return response: saved Elevator in JSON format
+deactivate RDG
+
+@enduml
+

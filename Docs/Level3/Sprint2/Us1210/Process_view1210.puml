@@ -1,0 +1,31 @@
+@startuml
+participant "Campus Manager" as user
+participant "Routing" as R
+participant "CreateRoomComponent" as COMP
+participant "RoomService" as SERVR
+participant "BackEnd" as BE
+activate user
+user -> R: Selects the Room menu on the web app
+activate R
+R --> user: Shows the Room menu
+deactivate R
+user -> R: Selects the create room option
+activate R
+R --> user: Routes to the create room component
+R -> COMP: Requests the create room component
+deactivate R
+activate COMP
+COMP --> user: Shows the create room form
+user -> COMP: Fills the form and submits it
+COMP -> SERVR: Sends the room data to the server
+activate SERVR
+SERVR -> BE: Sends the room data to the backend
+activate BE
+BE -> BE : Creates the room
+BE --> SERVR: Returns the success / failure message
+deactivate BE
+SERVR --> COMP: Returns the success / failure message
+deactivate SERVR
+COMP --> user: Shows the success / failure message
+deactivate COMP
+deactivate user

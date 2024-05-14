@@ -1,0 +1,15 @@
+@startuml
+
+actor "Campus Manager" as CM
+participant "<<System C4>>\nRobDroneGo" as RDG
+
+activate CM
+
+CM -> RDG: Sends data to edit floor x
+activate RDG
+RDG -> RDG: Edits data of floor x
+RDG --> CM: Returns success/failure
+deactivate RDG
+
+
+@enduml

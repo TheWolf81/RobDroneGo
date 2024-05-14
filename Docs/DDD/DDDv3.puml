@@ -1,0 +1,147 @@
+@startuml DMV
+skinparam classAttributeIconSize 1
+hide empty members
+hide circle
+left to right direction
+
+
+
+package Robot_<<aggregate>>{
+    class "<<Root>>\nRobot"{
+    }
+    class "<<Value Object>>\nNickname"{
+    }
+    class "<<Value Object>>\nStateOfRobot"{
+    }
+    "<<Root>>\nRobot" "1" --> "1" "<<Value Object>>\nNickname"
+    "<<Root>>\nRobot" "1" --> "1" "<<Value Object>>\nStateOfRobot"
+}
+
+package TypeOfRobot_<<aggregate>>{
+    class "<<Root>>\nTypeOfRobot" {
+    }
+    class "<<Value Object>>\nBrand"{
+    }
+    class "<<Value Object>>\nModel"{
+    }
+    "<<Root>>\nTypeOfRobot" "1" --> "1" "<<Value Object>>\nBrand"
+    "<<Root>>\nTypeOfRobot" "1" --> "1" "<<Value Object>>\nModel"
+
+}
+
+
+package Task_<<aggregate>>{
+    class "<<Root>>\nTask"{
+        - userEmail
+    }
+    class "<<Value Object>>\nTaskDescription"{
+    }
+    class "<<Value Object>>\nTaskState"{
+    }
+    class "<<Value Object>>\nTaskType"{
+    }
+    class "<<Value Object>>\nTaskCode"{
+    }
+
+    "<<Root>>\nTask" "1" --> "1" "<<Value Object>>\nTaskDescription"
+    "<<Root>>\nTask" "1" --> "1" "<<Value Object>>\nTaskState"
+    "<<Root>>\nTask" "1" --> "1" "<<Value Object>>\nTaskType"
+    "<<Root>>\nTask" "1" --> "1" "<<Value Object>>\nTaskCode"
+}
+
+
+
+package "Building_<<aggregate>>"{
+    class "<<Root>>\nBuilding"{
+    }
+    class "<<Value Object>>\nCode"{
+    }
+    class "<<Value Object>>\nDescription"{
+    }
+    class "<<Value Object>>\nMaxLength"{
+    }
+    class "<<Value Object>>\nMaxWidth"{
+    }
+    "<<Root>>\nBuilding" "1" --> "1" "<<Value Object>>\nCode"
+    "<<Root>>\nBuilding" "1" --> "1" "<<Value Object>>\nDescription"
+    "<<Root>>\nBuilding" "1" --> "1" "<<Value Object>>\nMaxLength"
+    "<<Root>>\nBuilding" "1" --> "1" "<<Value Object>>\nMaxWidth"
+}
+
+package "Elevator_<<aggregate>>"{
+    class "<<Root>>\nElevator"{
+    }
+
+    class "<<Value Object>>\nElevatorDescription"{
+    }
+
+    "<<Root>>\nElevator" "1" --> "1" "<<Value Object>>\nElevatorDescription"
+    "<<Root>>\nElevator" "1" --> "1" "<<Root>>\nBuilding" : belongs in
+
+}
+
+package "Room_<<aggregate>>"{
+    class "<<Root>>\nRoom"{
+    }
+    class "<<Value Object>>\nRoomDescription"{
+    }
+    class "<<Value Object>>\nCategory"{
+    }
+    class "<<Value Object>>\nIdentifier"{
+    }
+
+    "<<Root>>\nRoom" "1" --> "1" "<<Value Object>>\nRoomDescription"
+    "<<Root>>\nRoom" "1" --> "1" "<<Value Object>>\nCategory"
+    "<<Root>>\nRoom" "1" --> "1" "<<Value Object>>\nIdentifier"
+
+}
+package "Floor_<<aggregate>>"{
+    class "<<Root>>\nFloor"{
+    }
+
+    class "<<Value Object>>\nFloorNumber"{
+    }
+
+    class "<<Value Object>>\nFloorDescription"{
+    }
+
+    class "<<Value Object>>\nArea"{
+    }
+
+    class "<<Value Object>>\nName"{
+    }
+
+    class "<<Entity>>\nMap"{
+    - size
+    - map
+    - exits
+    - elevators
+    - exitLocation
+    }
+
+
+    "<<Root>>\nFloor" "1" --> "1" "<<Entity>>\nMap"
+    "<<Root>>\nFloor" "1" --> "1" "<<Value Object>>\nName"
+    "<<Root>>\nFloor" "1" --> "1" "<<Value Object>>\nFloorNumber"
+    "<<Root>>\nFloor" "1" --> "1" "<<Value Object>>\nFloorDescription"
+    "<<Root>>\nFloor" "1" --> "1" "<<Value Object>>\nArea"
+}
+"<<Root>>\nFloor" "1" <-- "1" "<<Root>>\nRoom" : belongs in
+
+package "HallwayConnection__<<aggregate>>"{
+
+    class "<<Root>>\nHallwayConnection"{
+    }
+
+}
+
+"<<Root>>\nBuilding" "1" --> "1..*" "<<Root>>\nHallwayConnection" : has
+"<<Root>>\nFloor" "2" <-- "1" "<<Root>>\nHallwayConnection" : connects
+"<<Root>>\nTypeOfRobot" "1" <-- "1" "<<Root>>\nRobot" : has
+"<<Root>>\nBuilding" "1" <-- "1..*" "<<Root>>\nFloor" : belongs to
+"<<Root>>\nElevator" "1" --> "1..*" "<<Root>>\nFloor" : serves
+"<<Root>>\nTask" "1" --> "2" "<<Root>>\nRoom"
+"<<Root>>\nTask" "1" --> "1" "<<Root>>\nTypeOfRobot" : has
+"<<Root>>\nTypeOfRobot" "1" --> "1..*" "<<Value Object>>\nTaskType" : can perform
+note left of "<<Root>>\nTask" : has two rooms for delivery and pickup\ncan be other location (elevators,corridors)\nfor surveillance 
+@enduml

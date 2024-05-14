@@ -1,0 +1,82 @@
+@startuml
+actor User as user
+participant "FrontEnd" as FE
+participant "ListexecuçãoTarefasHTML" as HTML
+participant "ListexecuçãoTarefasComponent" as COMP
+participant "TarefasService" as SERV
+participant TaskManagementeModole as p
+participant ControllerOfTaskManagementeModole as c
+participant ServiceOfTaskManagementeModole as s
+participant Authentication_Module as am
+participant RepositoryOfTaskManagementeModole as r
+participant ContextOfTaskManagementeModole as ctx
+participant PlaningModole as Planing
+
+
+activate user
+user -> FE: asks to list execução Tarefas aprovadas
+activate FE
+FE -> HTML: /task/ListexecuçãoTarefas
+activate HTML
+HTML -> COMP: ngOnInit()
+activate COMP
+COMP -> SERV: getTasksByStatus(aprovada)
+activate SERV
+SERV -> p: getTasksByStatus(aprovada)
+activate p
+p -> c : "get" http request with token to \n->/api/Task/GetByStatus/{status}
+c -> s : verify token's role
+activate s
+s -> am : sends token to authentication module
+activate am
+am -> am : gets user from token
+note right : this process is better described in package "MIDDLEWARE_AND_TOKEN_LOGIC"
+am --> s : returns user data
+deactivate am
+s -> s : checks if user has role "TaskManager"
+alt user has no role "TaskManager"
+
+
+
+activate s
+s --> c : returns error "Unauthorized"
+deactivate s
+activate c
+c --> p : returns error "Unauthorized"
+deactivate c
+else user has role "TaskManager"
+s -> r : get tasks with status {status} or typeOfDevice {typeOfDevice} or email {email}
+activate r
+r -> ctx : query database for tasks with given filter
+activate ctx
+ctx --> r : returns tasks
+deactivate ctx
+r --> s : returns tasks
+deactivate r
+s --> c : returns tasks
+deactivate s
+c --> p : returns tasks
+deactivate c
+end
+
+p --> SERV : returns tasks
+deactivate p
+SERV --> COMP : returns tasks
+deactivate SERV
+COMP --> SERV : getListaDeExucução(tasks)
+activate SERV
+SERV --> Planing : "get" http request 
+activate Planing
+Planing --> Planing : melhor_sequencia(tasks,ListaDasTasks)
+Planing --> SERV : returns ListaDasTasks
+deactivate Planing
+SERV --> COMP : returns ListaDasTasks
+deactivate SERV
+COMP --> HTML : returns ListaDasTasks
+deactivate COMP
+HTML --> FE : returns ListaDasTasks
+deactivate HTML
+FE --> user : returns ListaDasTasks
+deactivate FE
+deactivate user
+@enduml

@@ -1,0 +1,23 @@
+<h1>Account Menu</h1>
+<nav>
+    <ul class="nav__links">
+        <li><a routerLink="/auth/register" routerLinkActive="active">Request account creation</a></li>
+        <li><a *ngIf="userRole === 'SystemAdministrator'" routerLink="/auth/create" routerLinkActive="active">Create account</a></li>
+        <li><a *ngIf="userRole === 'SystemAdministrator'" routerLink="/auth/approveOrDenyRequests" routerLinkActive="active">Approve/Deny account requests</a></li>
+        <li><a *ngIf="userRole === 'SystemAdministrator' || userRole === 'Client' " routerLink="/auth/editAccount" routerLinkActive="active">Edit account</a></li>
+        <li><a routerLink="/auth/deleteAccount" routerLinkActive="active" class="delete-account">Delete account</a></li>
+        <form (submit)="dowanloadData()">
+            <button *ngIf="userRole === 'SystemAdministrator' || userRole === 'Client' || userRole === 'CampusManager' || userRole === 'FleetManager' || userRole === 'TaskManager' || userRole === 'SystemAdministrator'" type="submit">Download Data</button>
+        </form>
+        <form (submit)="logOut()">
+            <button *ngIf="userRole === 'SystemAdministrator' || userRole === 'Client' || userRole === 'CampusManager' || userRole === 'FleetManager' || userRole === 'TaskManager' || userRole === 'SystemAdministrator'" type="submit">LogOut</button>
+        </form>
+
+        <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+        <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+        
+    </ul>
+</nav>
+
+
